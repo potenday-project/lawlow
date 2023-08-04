@@ -1,0 +1,141 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "airbnb",
+    "airbnb-typescript",
+    "prettier",
+    "plugin:prettier/recommended"
+  ],
+  "globals": {
+    "document": false,
+    "fetch": true
+  },
+  "ignorePatterns": ["node_modules"],
+  "overrides": [],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": ["./tsconfig.json"],
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "node": {
+        "paths": ["src/**/*"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["src", "node_modules"]
+      },
+      "typescript": {}
+    }
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier", "import"],
+  "rules": {
+    "react/no-unknown-property": ["error", { "ignore": ["css"] }],
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/function-component-definition": [
+      1,
+      { "namedComponents": "arrow-function" }
+    ],
+    "react/require-default-props": "off",
+    "prettier/prettier": [
+      2,
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    ],
+    // issue exists: https://stackoverflow.com/questions/63818415/react-was-used-before-it-was-defined
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      { "functions": false, "typedefs": true, "variables": false }
+    ],
+    "prefer-destructuring": ["error", { "object": false, "array": true }], // mobx
+    // note you must disable the base rule as it can report incorrect errors: https://stackoverflow.com/questions/63961803/eslint-says-all-enums-in-typescript-app-are-already-declared-in-the-upper-scope
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-unsafe-call": 0,
+    "@typescript-eslint/no-unsafe-assignment": 0,
+    "import/default": 0,
+    // Indent JSX with 2 spaces
+    "react/jsx-indent": ["error", 2],
+    // Indent props with 2 spaces
+    "react/jsx-indent-props": ["error", 2],
+    "react/prop-types": 0,
+    "react/jsx-props-no-spreading": "off",
+    "import/no-extraneous-dependencies": 0,
+    "import/prefer-default-export": 0,
+    "no-unused-expressions": [
+      2,
+      { "allowTernary": true, "allowShortCircuit": true }
+    ],
+    "lines-between-class-members": [
+      "error",
+      "always",
+      { "exceptAfterSingleLine": true }
+    ],
+    "react/jsx-wrap-multilines": [
+      2,
+      {
+        "declaration": "parens",
+        "assignment": "parens",
+        "return": "parens",
+        "arrow": "parens",
+        "condition": "ignore",
+        "logical": "ignore",
+        "prop": "ignore"
+      }
+    ],
+    "import/extensions": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "mobx-react-lite",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": [],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
+}
