@@ -2,6 +2,9 @@ name: CICD
 
 on:
   push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 env:
   DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/rowlaw_docker_image
