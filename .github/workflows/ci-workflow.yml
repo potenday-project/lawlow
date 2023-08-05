@@ -1,0 +1,10 @@
+on:
+  pull_request:
+
+jobs:
+  echo-hello-world:
+    runs-on: ubuntu-latest
+    name: Echo Hello World Job
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo Hello World!
