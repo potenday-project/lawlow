@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: ${{ env.MANIFEST_REPOSITORY }}
-          token: ${{ secrets.GIT_HUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set Image Tag
         run: |
