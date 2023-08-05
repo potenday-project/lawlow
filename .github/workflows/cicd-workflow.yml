@@ -35,4 +35,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            [링크](${{ steps.extract-url.outputs.deploymentUrl }})에서 이번 PR 결과 화면을 확인할 수 있습니다😎
+            [링크](${{ steps.extract-url.outputs.deploymentUrl }})에서 이번 PR 결과 화면을 확인할 수 있습니다.😎
