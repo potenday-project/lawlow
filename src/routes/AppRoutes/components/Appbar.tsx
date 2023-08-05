@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import {
   AppBar as MuiAppBar,
@@ -7,6 +7,7 @@ import {
   Button,
   styled,
 } from "@mui/material";
+import { useNavigate } from "react-router";
 
 const StyledAppBar = styled(MuiAppBar)({
   backgroundColor: "transparent",
@@ -22,11 +23,17 @@ interface Props {
 }
 
 const AppBar = ({ isLogIn }: Props) => {
+  const navigate = useNavigate();
+
+  const handleClickLogin = useCallback(() => {
+    navigate("/login");
+  }, [navigate]);
+
   return (
     <StyledAppBar>
       <StyledToolbar>
         <Typography sx={{ color: "black" }}>로우로우</Typography>
-        {!isLogIn && <Button>로그인</Button>}
+        {!isLogIn && <Button onClick={handleClickLogin}>로그인</Button>}
         {isLogIn && <Button>로그아웃</Button>}
       </StyledToolbar>
     </StyledAppBar>
