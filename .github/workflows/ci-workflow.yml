@@ -4,7 +4,7 @@ on:
   push:
 
 env:
-  DOCKER_IMAGE_NAME: rowlaw_docker_image
+  DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/rowlaw_docker_image
 
 jobs:
   build-image:
