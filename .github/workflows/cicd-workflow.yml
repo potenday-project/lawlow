@@ -34,8 +34,8 @@ jobs:
         run: echo "deploymentUrl=$(cat deployment-url.txt)" >> $GITHUB_ENV
 
       - name: Comment preview url
-        if: ${{ github.event.issue || github.event.pull_request }}
+        if: ${{ github.event_name == 'pull_request' || github.event.issue || github.event.pull_request }}
         uses: thollander/actions-comment-pull-request@v2
         with:
-          message: |
-            [링크](${{ steps.extract-url.outputs.deploymentUrl }})에서 이번 PR 결과 화면을 확인할 수 있습니다.😎
+          message: '[링크](${{ env.deploymentUrl }})에서 이번 PR 결과 화면을 확인할 수 있습니다.😎'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
