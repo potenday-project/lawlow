@@ -1,20 +1,39 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
+    // Modules
+    "rootDir": "./",
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "typeRoots": ["./node_modules/@types"],
+    // Type Checking
+    "strict": true,
+    "noImplicitAny": true,
+    // Emit
     "noEmit": true,
-    "jsx": "react-jsx"
+    "outDir": "./dist",
+    // JS Support
+    "allowJs": true,
+    // Editor Support
+    // Interop Constraints
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    // Completeness
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@apis/*": ["./src/apis/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@stores/*": ["./src/stores/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["./src/**/*"]
 }
