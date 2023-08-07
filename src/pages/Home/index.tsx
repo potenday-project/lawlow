@@ -1,5 +1,7 @@
 import { ReactElement, useEffect, useRef } from "react";
 
+import { ArrowUpward } from "@mui/icons-material";
+import { IconButton, TextField } from "@mui/material";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -30,6 +32,26 @@ const Wrapper = styled.div`
 
   .section-one {
     background-image: url("/temp.gif");
+    display: flex;
+    align-items: end;
+
+    .search-area {
+      flex: 1;
+      padding: 2rem 1rem;
+      display: inline-flex;
+      gap: 0.5rem;
+
+      .MuiInputBase-root {
+        background-color: #ffffff;
+        border-radius: 33px;
+        border: 1px solid #3a00e5;
+      }
+
+      .MuiIconButton-root {
+        background-color: #3a00e5;
+        color: #ffffff;
+      }
+    }
   }
 
   .section-two {
@@ -107,7 +129,14 @@ const Home = (): ReactElement => {
 
   return (
     <Wrapper ref={ref}>
-      <section className="section-one">1</section>
+      <section className="section-one">
+        <div className="search-area">
+          <TextField fullWidth size="small" />
+          <IconButton>
+            <ArrowUpward />
+          </IconButton>
+        </div>
+      </section>
       <section className="section-two">2</section>
       <section className="section-three">3</section>
     </Wrapper>
