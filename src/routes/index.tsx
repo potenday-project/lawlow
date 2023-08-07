@@ -1,5 +1,3 @@
-import React from "react";
-
 import { createBrowserRouter } from "react-router-dom";
 import { styled } from "styled-components";
 
@@ -27,7 +25,10 @@ const router = createBrowserRouter([
       {
         path: "",
         index: true,
-        Component: TodoPage,
+        async lazy() {
+          const Home = await import("@pages/Home");
+          return { Component: Home.default };
+        },
       },
       {
         path: "login",
