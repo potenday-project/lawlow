@@ -1,7 +1,8 @@
-import { ReactElement, useEffect, useRef } from "react";
+import { ReactElement, useCallback, useEffect, useRef } from "react";
 
 import { ArrowUpward } from "@mui/icons-material";
 import { IconButton, TextField } from "@mui/material";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -65,6 +66,11 @@ const Wrapper = styled.div`
 
 const Home = (): ReactElement => {
   const ref = useRef<HTMLDivElement | null>(null);
+
+  const navigate = useNavigate();
+  const handleClickSearchButton = useCallback(() => {
+    navigate("/search");
+  }, [navigate]);
 
   useEffect(() => {
     const wheelHandler = (e: WheelEvent) => {
@@ -132,7 +138,7 @@ const Home = (): ReactElement => {
       <section className="section-one">
         <div className="search-area">
           <TextField fullWidth size="small" />
-          <IconButton>
+          <IconButton onClick={handleClickSearchButton}>
             <ArrowUpward />
           </IconButton>
         </div>
