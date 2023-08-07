@@ -16,9 +16,7 @@ const ContentContainer = styled.div`
   display: flex;
 
   .content {
-    position: absolute;
-    top: 64px;
-    height: calc(100% - 64px);
+    height: 100%;
     width: 100%;
 
     display: flex;
