@@ -25,6 +25,10 @@ interface Props {
 const AppBar = ({ isLogIn }: Props) => {
   const navigate = useNavigate();
 
+  const handleClickLogo = useCallback(() => {
+    navigate("/");
+  }, [navigate]);
+
   const handleClickLogin = useCallback(() => {
     navigate("/login");
   }, [navigate]);
@@ -32,7 +36,9 @@ const AppBar = ({ isLogIn }: Props) => {
   return (
     <StyledAppBar>
       <StyledToolbar>
-        <Typography sx={{ color: "black" }}>로우로우</Typography>
+        <Typography sx={{ color: "black" }} onClick={handleClickLogo}>
+          로우로우
+        </Typography>
         {!isLogIn && <Button onClick={handleClickLogin}>로그인</Button>}
         {isLogIn && <Button>로그아웃</Button>}
       </StyledToolbar>
