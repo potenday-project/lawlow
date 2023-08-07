@@ -17,6 +17,17 @@ const Wrapper = styled.div`
     font-size: 100px;
   }
 
+  .section-one::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+  }
+
   .section-one {
     background-image: url("/temp.gif");
   }
