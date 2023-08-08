@@ -6,6 +6,7 @@ module.exports = {
       "@": path.resolve(__dirname, "src/"),
       "@pages": path.resolve(__dirname, "src/pages"),
       "@stores": path.resolve(__dirname, "src/stores"),
+      "@interface": path.resolve(__dirname, "src/interface"),
     },
   },
   babel: {
