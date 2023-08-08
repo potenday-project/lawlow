@@ -1,9 +1,13 @@
 import { ReactElement, useCallback, useEffect, useRef } from "react";
 
+import { observer } from "mobx-react-lite";
+
 import { ArrowUpward } from "@mui/icons-material";
-import { IconButton, TextField } from "@mui/material";
+import { IconButton, TextField, TextFieldProps } from "@mui/material";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+
+import { useStore } from "@stores/index";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -66,9 +70,12 @@ const Wrapper = styled.div`
 
 const Home = (): ReactElement => {
   const ref = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<TextFieldProps | null>(null);
+  const { mainStore } = useStore();
 
   const navigate = useNavigate();
   const handleClickSearchButton = useCallback(() => {
+    mainStore.setSearchWord(inputRef.current?.value as string);
     navigate("/search");
   }, [navigate]);
 
@@ -137,7 +144,7 @@ const Home = (): ReactElement => {
     <Wrapper ref={ref}>
       <section className="section-one">
         <div className="search-area">
-          <TextField fullWidth size="small" />
+          <TextField fullWidth size="small" inputRef={inputRef} />
           <IconButton onClick={handleClickSearchButton}>
             <ArrowUpward />
           </IconButton>
@@ -149,4 +156,4 @@ const Home = (): ReactElement => {
   );
 };
 
-export default Home;
+export default observer(Home);
