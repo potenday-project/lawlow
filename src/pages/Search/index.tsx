@@ -1,10 +1,20 @@
-import React, { ReactElement, useCallback, useEffect, useRef } from "react";
+import React, {
+  ReactElement,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
+
+import { observer } from "mobx-react-lite";
 
 import { ArrowUpward } from "@mui/icons-material";
+import { Tabs, TabList, Tab } from "@mui/joy";
 import { IconButton, TextField, TextFieldProps } from "@mui/material";
 import styled from "styled-components";
 
 import { useStore } from "@/stores";
+import { SEARCH_TAB_INFOS, SearchTabType } from "@interface/search";
 
 const ContentWrapper = styled.main`
   position: absolute;
@@ -30,6 +40,34 @@ const ContentWrapper = styled.main`
       color: #ffffff;
     }
   }
+
+  .tab-area {
+    padding: 1.5rem 1rem 0rem 1rem;
+
+    .MuiTabList-root {
+      background-color: #eae3fe;
+      border-radius: 33px;
+      display: inline-flex;
+      padding: 5px 10px;
+
+      .MuiTab-root {
+        flex: 1;
+        background-color: transparent;
+        color: #000;
+        font-family: Pretendard;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 11px; /* 68.75% */
+
+        &.Mui-selected {
+          background-color: #3a00e5;
+          border-radius: 33px;
+          color: #fff;
+        }
+      }
+    }
+  }
 `;
 
 const Search = (): ReactElement => {
@@ -40,7 +78,17 @@ const Search = (): ReactElement => {
 
   const handleClickSearchButton = useCallback(() => {
     mainStore.setSearchWord(inputRef.current?.value as string);
-  }, []);
+  }, [mainStore]);
+
+  const handleChangeSelectedTab = useCallback(
+    (
+      event: SyntheticEvent<Element, Event> | null,
+      value: string | number | null,
+    ) => {
+      mainStore.setSelectedTab(value as SearchTabType);
+    },
+    [mainStore],
+  );
 
   useEffect(() => {
     if (inputRef) {
@@ -56,7 +104,22 @@ const Search = (): ReactElement => {
           <ArrowUpward />
         </IconButton>
       </section>
-      <section>tab</section>
+      <section className="tab-area">
+        <Tabs value={mainStore.selectedTab} onChange={handleChangeSelectedTab}>
+          <TabList disableUnderline>
+            {SEARCH_TAB_INFOS.map((info) => (
+              <Tab
+                key={info.value}
+                value={info.value}
+                variant="solid"
+                disableIndicator
+              >
+                {info.label}
+              </Tab>
+            ))}
+          </TabList>
+        </Tabs>
+      </section>
       <section>top</section>
       <section>list</section>
       <section>pagination</section>
@@ -64,4 +127,4 @@ const Search = (): ReactElement => {
   );
 };
 
-export default Search;
+export default observer(Search);
