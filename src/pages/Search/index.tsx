@@ -10,11 +10,22 @@ import { observer } from "mobx-react-lite";
 
 import { ArrowUpward } from "@mui/icons-material";
 import { Tabs, TabList, Tab } from "@mui/joy";
-import { IconButton, TextField, TextFieldProps } from "@mui/material";
+import {
+  Divider,
+  IconButton,
+  TextField,
+  TextFieldProps,
+  Typography,
+} from "@mui/material";
 import styled from "styled-components";
 
 import { useStore } from "@/stores";
-import { SEARCH_TAB_INFOS, SearchTabType } from "@interface/search";
+import {
+  SEARCH_TAB_INFOS,
+  SORT_TYPE_INFOS,
+  SearchTabType,
+  SortType,
+} from "@interface/search";
 
 const ContentWrapper = styled.main`
   position: absolute;
@@ -72,6 +83,51 @@ const ContentWrapper = styled.main`
       }
     }
   }
+
+  .top-area {
+    display: inline-flex;
+    padding: 11px 1rem;
+    justify-content: space-between;
+
+    .total-area {
+      display: inline-flex;
+      gap: 0.5rem;
+      color: #000;
+      font-family: Pretendard;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 15px; /* 107.143% */
+    }
+
+    .MuiTabs-root {
+      width: 150px;
+      background-color: transparent;
+      .MuiTabList-root {
+        background-color: transparent;
+        display: inline-flex;
+
+        .MuiTab-root {
+          flex: 1;
+          background-color: transparent;
+          color: #000;
+          font-family: Pretendard;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 15px; /* 68.75% */
+          opacity: 0.6;
+
+          &.Mui-selected {
+            font-weight: 700;
+
+            opacity: 1;
+            transition: opacity 0.4s ease-in-out;
+          }
+        }
+      }
+    }
+  }
 `;
 
 const Search = (): ReactElement => {
@@ -90,6 +146,16 @@ const Search = (): ReactElement => {
       value: string | number | null,
     ) => {
       mainStore.setSelectedTab(value as SearchTabType);
+    },
+    [mainStore],
+  );
+
+  const handleChangeSelectedSort = useCallback(
+    (
+      event: SyntheticEvent<Element, Event> | null,
+      value: string | number | null,
+    ) => {
+      mainStore.setSelectedSort(value as SortType);
     },
     [mainStore],
   );
@@ -124,7 +190,37 @@ const Search = (): ReactElement => {
           </TabList>
         </Tabs>
       </section>
-      <section>top</section>
+      <section className="top-area">
+        <section className="total-area">
+          <Typography display="inline">전체 검색 결과</Typography>
+          <Typography display="inline">{`${(5100).toLocaleString()}건`}</Typography>
+        </section>
+        <section>
+          <Tabs
+            size="sm"
+            value={mainStore.selectedSort}
+            onChange={handleChangeSelectedSort}
+          >
+            <TabList disableUnderline>
+              {SORT_TYPE_INFOS.map((info, i) => (
+                <>
+                  <Tab
+                    key={info.value}
+                    value={info.value}
+                    disableIndicator
+                    indicatorInset
+                  >
+                    {info.label}
+                  </Tab>
+                  {i !== SORT_TYPE_INFOS.length - 1 && (
+                    <Divider orientation="vertical" variant="middle" flexItem />
+                  )}
+                </>
+              ))}
+            </TabList>
+          </Tabs>
+        </section>
+      </section>
       <section>list</section>
       <section>pagination</section>
     </ContentWrapper>
