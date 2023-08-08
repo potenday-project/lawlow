@@ -13,3 +13,19 @@ export const SEARCH_TAB_INFOS: {
     value: "LEGISLATION",
   },
 ];
+
+const SORT_TYPES = ["DESC", "ACCURACY"] as const;
+export type SortType = (typeof SORT_TYPES)[number];
+export const SORT_TYPE_INFOS: {
+  label: string;
+  value: SortType;
+}[] = [
+  {
+    label: "최신순",
+    value: "DESC",
+  },
+  {
+    label: "정확도순",
+    value: "ACCURACY",
+  },
+];
