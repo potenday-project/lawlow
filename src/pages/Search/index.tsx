@@ -59,11 +59,15 @@ const ContentWrapper = styled.main`
         font-style: normal;
         font-weight: 500;
         line-height: 11px; /* 68.75% */
+        opacity: 0.6;
 
         &.Mui-selected {
           background-color: #3a00e5;
           border-radius: 33px;
           color: #fff;
+
+          opacity: 1;
+          transition: opacity 0.4s ease-in-out;
         }
       }
     }
