@@ -20,6 +20,7 @@ import {
   Paper,
   Box,
   Chip,
+  Pagination,
 } from "@mui/material";
 import styled from "styled-components";
 
@@ -182,6 +183,9 @@ const ContentWrapper = styled.main`
   }
 
   .pagination-area {
+    display: inline-flex;
+    justify-content: center;
+    padding: 20px;
   }
 `;
 
@@ -287,7 +291,10 @@ const Search = (): ReactElement => {
           </Paper>
         ))}
       </section>
-      <section>pagination</section>
+      <section className="pagination-area">
+        {/* @TODO Logig 구현 */}
+        <Pagination count={6} size="small" />
+      </section>
     </ContentWrapper>
   );
 };
