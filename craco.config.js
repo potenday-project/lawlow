@@ -8,6 +8,7 @@ module.exports = {
       "@stores": path.resolve(__dirname, "src/stores"),
       "@interface": path.resolve(__dirname, "src/interface"),
       "@style": path.resolve(__dirname, "src/style"),
+      "@assets": path.resolve(__dirname, "src/assets"),
     },
   },
   babel: {

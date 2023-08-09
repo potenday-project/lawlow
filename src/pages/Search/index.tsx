@@ -22,6 +22,7 @@ import {
   Chip,
   Pagination,
 } from "@mui/material";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 import { useStore } from "@/stores";
@@ -192,6 +193,7 @@ const ContentWrapper = styled.main`
 const Search = (): ReactElement => {
   const { mainStore } = useStore();
   const inputRef = useRef<TextFieldProps | null>(null);
+  const navigate = useNavigate();
 
   const handleClickSearchButton = useCallback(() => {
     mainStore.setSearchWord(inputRef.current?.value as string);
@@ -217,6 +219,10 @@ const Search = (): ReactElement => {
     [mainStore],
   );
 
+  const handleClickListItem = useCallback((id: number) => {
+    navigate(`${id}`);
+  }, []);
+
   useEffect(() => {
     if (inputRef) {
       if (inputRef.current) inputRef.current.value = mainStore.searchWord;
@@ -224,7 +230,7 @@ const Search = (): ReactElement => {
   }, [inputRef]);
 
   /** @TODO list GET api */
-  const data: BriefSearchResult[] = Array.from({ length: 1 }, (_, i) => ({
+  const data: BriefSearchResult[] = Array.from({ length: 3 }, (_, i) => ({
     id: i,
     title: "가품 판매 업체 대표에 대한 명예훼손 사례",
     content:
@@ -275,7 +281,7 @@ const Search = (): ReactElement => {
       </section>
       <section className="list-area">
         {data.map((d) => (
-          <Paper key={d.id}>
+          <Paper key={d.id} onClick={() => handleClickListItem(d.id)}>
             <Box className="title-area">
               <Typography>{d.title}</Typography>
               <IconButton>
