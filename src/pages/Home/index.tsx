@@ -50,6 +50,10 @@ const Wrapper = styled.div`
         background-color: #ffffff;
         border-radius: 33px;
         border: 1px solid #3a00e5;
+
+        .MuiInputBase-input {
+          color: #000;
+        }
       }
 
       .MuiIconButton-root {

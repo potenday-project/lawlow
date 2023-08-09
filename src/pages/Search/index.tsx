@@ -8,19 +8,24 @@ import React, {
 
 import { observer } from "mobx-react-lite";
 
-import { ArrowUpward } from "@mui/icons-material";
-import { Tabs, TabList, Tab } from "@mui/joy";
+import { ArrowForwardIos, ArrowUpward } from "@mui/icons-material";
 import {
   Divider,
   IconButton,
   TextField,
   TextFieldProps,
   Typography,
+  Tabs,
+  Tab,
+  Paper,
+  Box,
+  Chip,
 } from "@mui/material";
 import styled from "styled-components";
 
 import { useStore } from "@/stores";
 import {
+  BriefSearchResult,
   SEARCH_TAB_INFOS,
   SORT_TYPE_INFOS,
   SearchTabType,
@@ -44,6 +49,10 @@ const ContentWrapper = styled.main`
       background-color: #ffffff;
       border-radius: 33px;
       border: 1px solid #3a00e5;
+
+      .MuiInputBase-input {
+        color: #000;
+      }
     }
 
     .MuiIconButton-root {
@@ -55,11 +64,16 @@ const ContentWrapper = styled.main`
   .tab-area {
     padding: 1.5rem 1rem 0rem 1rem;
 
-    .MuiTabList-root {
+    .MuiTabs-root {
       background-color: #eae3fe;
       border-radius: 33px;
       display: inline-flex;
       padding: 5px 10px;
+      width: 100%;
+
+      .MuiTabs-indicator {
+        display: none;
+      }
 
       .MuiTab-root {
         flex: 1;
@@ -70,15 +84,12 @@ const ContentWrapper = styled.main`
         font-style: normal;
         font-weight: 500;
         line-height: 11px; /* 68.75% */
-        opacity: 0.6;
 
         &.Mui-selected {
           background-color: #3a00e5;
           border-radius: 33px;
           color: #fff;
-
-          opacity: 1;
-          transition: opacity 0.4s ease-in-out;
+          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
         }
       }
     }
@@ -88,11 +99,11 @@ const ContentWrapper = styled.main`
     display: inline-flex;
     padding: 11px 1rem;
     justify-content: space-between;
+    align-items: baseline;
 
     .total-area {
       display: inline-flex;
       gap: 0.5rem;
-      color: #000;
       font-family: Pretendard;
       font-size: 14px;
       font-style: normal;
@@ -101,40 +112,82 @@ const ContentWrapper = styled.main`
     }
 
     .MuiTabs-root {
-      width: 150px;
       background-color: transparent;
-      .MuiTabList-root {
+      border-radius: 33px;
+
+      .MuiTabs-indicator {
+        display: none;
+      }
+
+      .MuiTab-root {
+        flex: 1;
+        border-radius: 33px;
         background-color: transparent;
-        display: inline-flex;
+        font-family: Pretendard;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 15px; /* 68.75% */
 
-        .MuiTab-root {
-          flex: 1;
-          background-color: transparent;
-          color: #000;
-          font-family: Pretendard;
-          font-size: 14px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 15px; /* 68.75% */
-          opacity: 0.6;
-
-          &.Mui-selected {
-            font-weight: 700;
-
-            opacity: 1;
-            transition: opacity 0.4s ease-in-out;
-          }
+        &.Mui-selected {
+          font-weight: 700;
+          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
         }
       }
     }
+  }
+
+  .list-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 11px 1rem;
+    gap: 1rem;
+
+    .MuiPaper-root {
+      border-radius: 20px;
+      padding: 8px 15px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+
+      font-family: Pretendard;
+      font-style: normal;
+      line-height: 15px;
+
+      .title-area {
+        font-size: 15px;
+        font-weight: 500;
+        display: inline-flex;
+        justify-content: space-around;
+        width: 100%;
+        align-items: center;
+      }
+
+      .content {
+        max-height: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        whitespace: nowrap;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .keywords {
+        display: inline-flex;
+        gap: 8px;
+      }
+    }
+  }
+
+  .pagination-area {
   }
 `;
 
 const Search = (): ReactElement => {
   const { mainStore } = useStore();
   const inputRef = useRef<TextFieldProps | null>(null);
-
-  /** @TODO list GET api */
 
   const handleClickSearchButton = useCallback(() => {
     mainStore.setSearchWord(inputRef.current?.value as string);
@@ -166,6 +219,15 @@ const Search = (): ReactElement => {
     }
   }, [inputRef]);
 
+  /** @TODO list GET api */
+  const data: BriefSearchResult[] = Array.from({ length: 1 }, (_, i) => ({
+    id: i,
+    title: "가품 판매 업체 대표에 대한 명예훼손 사례",
+    content:
+      "1. 2019년, 한 온라인 커뮤니티 사용자가 가품 판매 업체 대표를 고발하는 글을 올렸습니다. 가품 업체 대표가 이를 명예훼손으로 간주하고 해당 사용자를 상대로 소송을 제기했습니다. 이 사안에서는 민사 소송에서 명예훼손을 입증하기 위해서는 다음과 같은 요소들을 증명해야 했습니다: 고소당사자에 의해 주장된 내용이 사실과 다르거나 오인될 정도로 음해적일 것 명예훼손이 공공의 이익을 달성하는 데 필요하다고 인정되지 않을 것",
+    keywords: ["1심 취소, 원고 승", "keyword2"],
+  }));
+
   return (
     <ContentWrapper>
       <section className="search-area">
@@ -175,19 +237,14 @@ const Search = (): ReactElement => {
         </IconButton>
       </section>
       <section className="tab-area">
-        <Tabs value={mainStore.selectedTab} onChange={handleChangeSelectedTab}>
-          <TabList disableUnderline>
-            {SEARCH_TAB_INFOS.map((info) => (
-              <Tab
-                key={info.value}
-                value={info.value}
-                variant="solid"
-                disableIndicator
-              >
-                {info.label}
-              </Tab>
-            ))}
-          </TabList>
+        <Tabs
+          value={mainStore.selectedTab}
+          onChange={handleChangeSelectedTab}
+          variant="fullWidth"
+        >
+          {SEARCH_TAB_INFOS.map((info) => (
+            <Tab key={info.value} value={info.value} label={info.label} />
+          ))}
         </Tabs>
       </section>
       <section className="top-area">
@@ -197,31 +254,39 @@ const Search = (): ReactElement => {
         </section>
         <section>
           <Tabs
-            size="sm"
             value={mainStore.selectedSort}
             onChange={handleChangeSelectedSort}
           >
-            <TabList disableUnderline>
-              {SORT_TYPE_INFOS.map((info, i) => (
-                <>
-                  <Tab
-                    key={info.value}
-                    value={info.value}
-                    disableIndicator
-                    indicatorInset
-                  >
-                    {info.label}
-                  </Tab>
-                  {i !== SORT_TYPE_INFOS.length - 1 && (
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                  )}
-                </>
-              ))}
-            </TabList>
+            <Tab
+              value={SORT_TYPE_INFOS[0].value}
+              label={SORT_TYPE_INFOS[0].label}
+            />
+            <Divider orientation="vertical" variant="middle" flexItem />
+            <Tab
+              value={SORT_TYPE_INFOS[1].value}
+              label={SORT_TYPE_INFOS[1].label}
+            />
           </Tabs>
         </section>
       </section>
-      <section>list</section>
+      <section className="list-area">
+        {data.map((d) => (
+          <Paper key={d.id}>
+            <Box className="title-area">
+              <Typography>{d.title}</Typography>
+              <IconButton>
+                <ArrowForwardIos />
+              </IconButton>
+            </Box>
+            <Box className="content">{d.content}</Box>
+            <Box className="keywords">
+              {d.keywords.map((k) => (
+                <Chip key={k} label={k} />
+              ))}
+            </Box>
+          </Paper>
+        ))}
+      </section>
       <section>pagination</section>
     </ContentWrapper>
   );

@@ -29,3 +29,10 @@ export const SORT_TYPE_INFOS: {
     value: "ACCURACY",
   },
 ];
+
+export interface BriefSearchResult {
+  id: number;
+  title: string;
+  content: string;
+  keywords: string[];
+}
