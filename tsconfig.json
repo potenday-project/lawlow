@@ -31,7 +31,8 @@
       "@pages/*": ["./src/pages/*"],
       "@stores/*": ["./src/stores/*"],
       "@interface/*": ["./src/interface/*"],
-      "@style/*": ["./src/style/*"]
+      "@style/*": ["./src/style/*"],
+      "@assets/*": ["./src/assets/*"]
     }
   },
   "include": ["./src/**/*"]
