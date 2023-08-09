@@ -54,8 +54,8 @@ const router = createBrowserRouter([
       {
         path: "search",
         async lazy() {
-          const Search = await TodoPage;
-          return { Component: Search };
+          const Search = await import("@pages/Search");
+          return { Component: Search.default };
         },
       },
       {

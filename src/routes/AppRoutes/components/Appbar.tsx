@@ -53,9 +53,7 @@ const AppBar = ({ isLogIn }: Props) => {
   return (
     <StyledAppBar>
       <StyledToolbar>
-        <Typography sx={{ color: "black" }} onClick={handleClickLogo}>
-          로우로우
-        </Typography>
+        <Typography onClick={handleClickLogo}>로우로우</Typography>
         {!isLogIn && (
           <StyledButton onClick={handleClickLogin}>로그인</StyledButton>
         )}

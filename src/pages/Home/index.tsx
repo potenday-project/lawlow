@@ -1,6 +1,13 @@
-import { ReactElement, useEffect, useRef } from "react";
+import { ReactElement, useCallback, useEffect, useRef } from "react";
 
+import { observer } from "mobx-react-lite";
+
+import { ArrowUpward } from "@mui/icons-material";
+import { IconButton, TextField, TextFieldProps } from "@mui/material";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
+
+import { useStore } from "@stores/index";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -17,8 +24,43 @@ const Wrapper = styled.div`
     font-size: 100px;
   }
 
+  .section-one::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+  }
+
   .section-one {
     background-image: url("/temp.gif");
+    display: flex;
+    align-items: end;
+
+    .search-area {
+      flex: 1;
+      padding: 2rem 1rem;
+      display: inline-flex;
+      gap: 0.5rem;
+
+      .MuiInputBase-root {
+        background-color: #ffffff;
+        border-radius: 33px;
+        border: 1px solid #3a00e5;
+
+        .MuiInputBase-input {
+          color: #000;
+        }
+      }
+
+      .MuiIconButton-root {
+        background-color: #3a00e5;
+        color: #ffffff;
+      }
+    }
   }
 
   .section-two {
@@ -32,6 +74,14 @@ const Wrapper = styled.div`
 
 const Home = (): ReactElement => {
   const ref = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<TextFieldProps | null>(null);
+  const { mainStore } = useStore();
+
+  const navigate = useNavigate();
+  const handleClickSearchButton = useCallback(() => {
+    mainStore.setSearchWord(inputRef.current?.value as string);
+    navigate("/search");
+  }, [navigate]);
 
   useEffect(() => {
     const wheelHandler = (e: WheelEvent) => {
@@ -96,11 +146,18 @@ const Home = (): ReactElement => {
 
   return (
     <Wrapper ref={ref}>
-      <section className="section-one">1</section>
+      <section className="section-one">
+        <div className="search-area">
+          <TextField fullWidth size="small" inputRef={inputRef} />
+          <IconButton onClick={handleClickSearchButton}>
+            <ArrowUpward />
+          </IconButton>
+        </div>
+      </section>
       <section className="section-two">2</section>
       <section className="section-three">3</section>
     </Wrapper>
   );
 };
 
-export default Home;
+export default observer(Home);
