@@ -5,7 +5,7 @@ import {
   GoogleOAuthProvider,
   UserDataWithCredential,
 } from "@moeindana/google-oauth";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
@@ -39,14 +39,11 @@ const Login = (): ReactElement => {
       localStorage.setItem("credential", res.credential ?? "");
 
       window.dispatchEvent(new Event("storage"));
+
+      navigate("/");
     },
     [],
   );
-
-  const handleClickLogOut = useCallback(() => {
-    localStorage.clear();
-    window.dispatchEvent(new Event("storage"));
-  }, []);
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -79,7 +76,6 @@ const Login = (): ReactElement => {
           />
         </GoogleOAuthProvider>
       )}
-      {isLogin && <Button onClick={handleClickLogOut}>로그아웃</Button>}
     </ContentWrapper>
   );
 };

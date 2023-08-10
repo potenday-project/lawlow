@@ -7,7 +7,7 @@ import React, {
 
 import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, IconButton, Tab, Tabs, Typography } from "@mui/material";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 
 import { DETAIL_TAB_INFOS } from "@/interface/searchDetail";
@@ -186,24 +186,31 @@ const TabPanel = ({
 
 const SearchDetail = (): ReactElement => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   /** @TODO 1. data1 호출 */
   /** @TODO 2. data2 호출 */
 
   const [selectedTab, setSelectedTab] = useState("original");
+
+  const handleClickGoBack = useCallback(() => {
+    navigate("/search");
+  }, [navigate]);
+
   const handleChangeTabs = useCallback(
     (event: SyntheticEvent<Element, Event> | null, value: string) => {
       setSelectedTab(value);
     },
     [setSelectedTab],
   );
+
   console.log(id);
   return (
     <ContentWrapper>
       {/* @TODO api 나오면 컴포넌트 분리 */}
       <Box className="original-area">
         <Box className="title-area">
-          <IconButton>
+          <IconButton onClick={handleClickGoBack}>
             <ArrowBack />
           </IconButton>
           <p>title</p>
