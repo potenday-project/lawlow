@@ -1,3 +1,4 @@
+require("react-scripts/config/env");
 const path = require("path");
 
 module.exports = {
