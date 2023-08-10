@@ -51,6 +51,10 @@ const AppBar = () => {
     navigate("/login");
   }, [navigate]);
 
+  const handleClickProfile = useCallback(() => {
+    navigate("/my-profile");
+  }, [navigate]);
+
   useEffect(() => {
     const handleStorageChange = () => {
       setIsLogin(
@@ -74,7 +78,11 @@ const AppBar = () => {
           <StyledButton onClick={handleClickLogin}>로그인</StyledButton>
         )}
         {isLogin && (
-          <Avatar alt="profile" src={localStorage.getItem("picture") ?? ""} />
+          <Avatar
+            onClick={handleClickProfile}
+            alt="profile"
+            src={localStorage.getItem("picture") ?? ""}
+          />
         )}
       </StyledToolbar>
     </StyledAppBar>
