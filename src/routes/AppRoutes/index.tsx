@@ -28,7 +28,7 @@ const AppRoutes = (): ReactElement => {
   /** @TODO Login 관련 */
   return (
     <AppContainer>
-      <AppBar isLogIn={false} />
+      <AppBar />
       <ContentContainer>
         <div className="content">
           <Outlet />

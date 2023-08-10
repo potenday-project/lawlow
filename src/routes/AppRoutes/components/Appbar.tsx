@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import {
   AppBar as MuiAppBar,
@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   styled,
+  Avatar,
 } from "@mui/material";
 import { useNavigate } from "react-router";
 
@@ -35,12 +36,12 @@ const StyledButton = styled(Button)({
   letterSpacing: "0.6px",
 });
 
-interface Props {
-  isLogIn: boolean;
-}
-
-const AppBar = ({ isLogIn }: Props) => {
+const AppBar = () => {
   const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(
+    localStorage.getItem("credential") !== null &&
+      localStorage.getItem("credential") !== "",
+  );
 
   const handleClickLogo = useCallback(() => {
     navigate("/");
@@ -50,14 +51,31 @@ const AppBar = ({ isLogIn }: Props) => {
     navigate("/login");
   }, [navigate]);
 
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsLogin(
+        localStorage.getItem("credential") !== null &&
+          localStorage.getItem("credential") !== "",
+      );
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
   return (
     <StyledAppBar>
       <StyledToolbar>
         <Typography onClick={handleClickLogo}>로우로우</Typography>
-        {!isLogIn && (
+        {!isLogin && (
           <StyledButton onClick={handleClickLogin}>로그인</StyledButton>
         )}
-        {isLogIn && <StyledButton>로그아웃</StyledButton>}
+        {isLogin && (
+          <Avatar alt="profile" src={localStorage.getItem("picture") ?? ""} />
+        )}
       </StyledToolbar>
     </StyledAppBar>
   );

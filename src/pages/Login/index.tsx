@@ -20,7 +20,7 @@ const ContentWrapper = styled.main`
 
 const Login = (): ReactElement => {
   const [isLogin, setIsLogin] = useState(
-    localStorage.getItem("credential") &&
+    localStorage.getItem("credential") !== null &&
       localStorage.getItem("credential") !== "",
   );
 
@@ -51,7 +51,7 @@ const Login = (): ReactElement => {
   useEffect(() => {
     const handleStorageChange = () => {
       setIsLogin(
-        localStorage.getItem("credential") &&
+        localStorage.getItem("credential") !== null &&
           localStorage.getItem("credential") !== "",
       );
     };
