@@ -2,13 +2,13 @@ import { ReactElement, useCallback, useEffect, useRef } from "react";
 
 import { observer } from "mobx-react-lite";
 
-import { ArrowUpward } from "@mui/icons-material";
 import { Box, IconButton, TextField, TextFieldProps } from "@mui/material";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 import MainBackground from "@/assets/svg/MainBackground";
 import MainPageLogo from "@/assets/svg/MainPageLogo";
+import SearchIcon from "@/assets/svg/SearchIcon";
 import { useStore } from "@stores/index";
 
 const Wrapper = styled.div`
@@ -55,6 +55,7 @@ const Wrapper = styled.div`
         width: 100%;
         gap: 0.5rem;
         padding-bottom: 45px;
+        align-items: center;
       }
 
       .MuiInputBase-root {
@@ -98,7 +99,8 @@ const Home = (): ReactElement => {
 
   const navigate = useNavigate();
   const handleClickSearchButton = useCallback(() => {
-    mainStore.setSearchWord(inputRef.current?.value as string);
+    mainStore.resetSearchWords();
+    mainStore.addSearchWord(inputRef.current?.value as string);
     navigate("/search");
   }, [navigate]);
 
@@ -181,7 +183,7 @@ const Home = (): ReactElement => {
               placeholder="키워드 또는 사건번호 입력"
             />
             <IconButton onClick={handleClickSearchButton}>
-              <ArrowUpward />
+              <SearchIcon />
             </IconButton>
           </Box>
         </div>

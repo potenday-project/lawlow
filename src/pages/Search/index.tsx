@@ -8,7 +8,7 @@ import React, {
 
 import { observer } from "mobx-react-lite";
 
-import { ArrowForwardIos, ArrowUpward } from "@mui/icons-material";
+import { ArrowBack, ArrowForwardIos } from "@mui/icons-material";
 import {
   Divider,
   IconButton,
@@ -25,6 +25,7 @@ import {
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
+import SearchIcon from "@/assets/svg/SearchIcon";
 import { useStore } from "@/stores";
 import {
   BriefSearchResult,
@@ -48,19 +49,31 @@ const ContentWrapper = styled.main`
     gap: 0.5rem;
 
     .MuiInputBase-root {
-      background-color: #ffffff;
-      border-radius: 33px;
-      border: 1px solid #3a00e5;
+        border-radius: 28px;
+        border: 2px solid var(--orange, #ffbc10);
+        background: var(--grey-3, rgba(225, 221, 209, 0.42));
+        box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
 
-      .MuiInputBase-input {
-        color: #000;
+        &.Mui-focused {
+          & .MuiOutlinedInput-notchedOutline {
+            border-color: #ff7e20;
+          }
+        }
+
+        .MuiInputBase-input {
+          color: #000;
+        }
       }
     }
 
-    .MuiIconButton-root {
-      background-color: #3a00e5;
-      color: #ffffff;
+    .goback-button {
+
     }
+    .search-button {
+        background-color: rgba(255, 188, 16, 1);
+        color: #ffffff;
+        box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
+      }
   }
 
   .tab-area {
@@ -196,7 +209,7 @@ const Search = (): ReactElement => {
   const navigate = useNavigate();
 
   const handleClickSearchButton = useCallback(() => {
-    mainStore.setSearchWord(inputRef.current?.value as string);
+    mainStore.addSearchWord(inputRef.current?.value as string);
   }, [mainStore]);
 
   const handleChangeSelectedTab = useCallback(
@@ -225,7 +238,9 @@ const Search = (): ReactElement => {
 
   useEffect(() => {
     if (inputRef) {
-      if (inputRef.current) inputRef.current.value = mainStore.searchWord;
+      if (inputRef.current)
+        inputRef.current.value =
+          mainStore.searchWords[mainStore.searchWords.length - 1];
     }
   }, [inputRef]);
 
@@ -241,9 +256,12 @@ const Search = (): ReactElement => {
   return (
     <ContentWrapper>
       <section className="search-area">
+        <IconButton className="goback-button" onClick={handleClickSearchButton}>
+          <ArrowBack />
+        </IconButton>
         <TextField fullWidth size="small" inputRef={inputRef} />
-        <IconButton onClick={handleClickSearchButton}>
-          <ArrowUpward />
+        <IconButton className="search-button" onClick={handleClickSearchButton}>
+          <SearchIcon />
         </IconButton>
       </section>
       <section className="tab-area">
