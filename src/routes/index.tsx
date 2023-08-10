@@ -31,13 +31,6 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "login",
-        async lazy() {
-          const Login = await import("@pages/Login");
-          return { Component: Login.default };
-        },
-      },
-      {
         path: "signin",
         async lazy() {
           const Signin = await TodoPage;
@@ -73,6 +66,13 @@ const router = createBrowserRouter([
         },
       },
     ],
+  },
+  {
+    path: "login",
+    async lazy() {
+      const Login = await import("@pages/Login");
+      return { Component: Login.default };
+    },
   },
 ]);
 
