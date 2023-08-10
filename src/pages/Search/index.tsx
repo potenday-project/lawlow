@@ -208,6 +208,15 @@ const Search = (): ReactElement => {
   const inputRef = useRef<TextFieldProps | null>(null);
   const navigate = useNavigate();
 
+  const handleClickGoBack = useCallback(() => {
+    mainStore.popSearchWord();
+    if (mainStore.searchWords.length > 0) {
+      if (inputRef.current)
+        inputRef.current.value =
+          mainStore.searchWords[mainStore.searchWords.length - 1] ?? "";
+    } else navigate("/");
+  }, [mainStore.searchWords, navigate]);
+
   const handleClickSearchButton = useCallback(() => {
     mainStore.addSearchWord(inputRef.current?.value as string);
   }, [mainStore]);
@@ -240,7 +249,7 @@ const Search = (): ReactElement => {
     if (inputRef) {
       if (inputRef.current)
         inputRef.current.value =
-          mainStore.searchWords[mainStore.searchWords.length - 1];
+          mainStore.searchWords[mainStore.searchWords.length - 1] ?? "";
     }
   }, [inputRef]);
 
@@ -256,7 +265,7 @@ const Search = (): ReactElement => {
   return (
     <ContentWrapper>
       <section className="search-area">
-        <IconButton className="goback-button" onClick={handleClickSearchButton}>
+        <IconButton className="goback-button" onClick={handleClickGoBack}>
           <ArrowBack />
         </IconButton>
         <TextField fullWidth size="small" inputRef={inputRef} />

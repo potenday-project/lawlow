@@ -25,6 +25,10 @@ class MainStore {
     this.searchWords = [...this.searchWords, value];
   }
 
+  popSearchWord() {
+    this.searchWords = [...this.searchWords.slice(0, -1)];
+  }
+
   setSelectedTab(value: SearchTabType) {
     this.selectedTab = value;
   }
