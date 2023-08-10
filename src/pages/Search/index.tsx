@@ -21,10 +21,12 @@ import {
   Box,
   Chip,
   Pagination,
+  InputAdornment,
 } from "@mui/material";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
+import ClearIcon from "@/assets/svg/ClearIcon";
 import SearchIcon from "@/assets/svg/SearchIcon";
 import { useStore } from "@/stores";
 import {
@@ -217,6 +219,12 @@ const Search = (): ReactElement => {
     } else navigate("/");
   }, [mainStore.searchWords, navigate]);
 
+  const handleClickClearButton = useCallback(() => {
+    if (inputRef.current)
+      inputRef.current.value =
+        mainStore.searchWords[mainStore.searchWords.length - 1] ?? "";
+  }, [inputRef]);
+
   const handleClickSearchButton = useCallback(() => {
     mainStore.addSearchWord(inputRef.current?.value as string);
   }, [mainStore]);
@@ -268,7 +276,20 @@ const Search = (): ReactElement => {
         <IconButton className="goback-button" onClick={handleClickGoBack}>
           <ArrowBack />
         </IconButton>
-        <TextField fullWidth size="small" inputRef={inputRef} />
+        <TextField
+          fullWidth
+          size="small"
+          inputRef={inputRef}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton edge="end" onClick={handleClickClearButton}>
+                  <ClearIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
         <IconButton className="search-button" onClick={handleClickSearchButton}>
           <SearchIcon />
         </IconButton>
