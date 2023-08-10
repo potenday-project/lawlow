@@ -12,7 +12,7 @@ import router from "./routes";
 
 const App = () => {
   return (
-    <ThemeProvider theme={themes.dark}>
+    <ThemeProvider theme={themes.light}>
       <CssBaseline />
       <RouterProvider router={router} />
     </ThemeProvider>
