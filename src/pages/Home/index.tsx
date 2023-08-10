@@ -3,10 +3,12 @@ import { ReactElement, useCallback, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
 
 import { ArrowUpward } from "@mui/icons-material";
-import { IconButton, TextField, TextFieldProps } from "@mui/material";
+import { Box, IconButton, TextField, TextFieldProps } from "@mui/material";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
+import MainBackground from "@/assets/svg/MainBackground";
+import MainPageLogo from "@/assets/svg/MainPageLogo";
 import { useStore } from "@stores/index";
 
 const Wrapper = styled.div`
@@ -24,32 +26,48 @@ const Wrapper = styled.div`
     font-size: 100px;
   }
 
-  .section-one::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    pointer-events: none;
-  }
-
   .section-one {
-    background-image: url("/temp.gif");
     display: flex;
-    align-items: end;
+    flex-direction: column;
+
+    .main-logo-area {
+      flex: 1;
+      display: flex;
+      padding: 10%;
+      display: flex;
+      align-items: center;
+    }
+
+    .main-background-area {
+      width: 100%;
+      height: 289px;
+    }
 
     .search-area {
       flex: 1;
-      padding: 2rem 1rem;
-      display: inline-flex;
-      gap: 0.5rem;
+      align-items: flex-end;
+      width: 100%;
+      padding: 20px;
+      display: flex;
+
+      .container {
+        display: inline-flex;
+        width: 100%;
+        gap: 0.5rem;
+        padding-bottom: 45px;
+      }
 
       .MuiInputBase-root {
-        background-color: #ffffff;
-        border-radius: 33px;
-        border: 1px solid #3a00e5;
+        border-radius: 28px;
+        border: 2px solid var(--orange, #ffbc10);
+        background: var(--grey-3, rgba(225, 221, 209, 0.42));
+        box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
+
+        &.Mui-focused {
+          & .MuiOutlinedInput-notchedOutline {
+            border-color: #ff7e20;
+          }
+        }
 
         .MuiInputBase-input {
           color: #000;
@@ -57,8 +75,9 @@ const Wrapper = styled.div`
       }
 
       .MuiIconButton-root {
-        background-color: #3a00e5;
+        background-color: rgba(255, 188, 16, 1);
         color: #ffffff;
+        box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
       }
     }
   }
@@ -147,11 +166,24 @@ const Home = (): ReactElement => {
   return (
     <Wrapper ref={ref}>
       <section className="section-one">
+        <Box className="main-logo-area">
+          <MainPageLogo />
+        </Box>
+        <Box className="main-background-area">
+          <MainBackground />
+        </Box>
         <div className="search-area">
-          <TextField fullWidth size="small" inputRef={inputRef} />
-          <IconButton onClick={handleClickSearchButton}>
-            <ArrowUpward />
-          </IconButton>
+          <Box className="container">
+            <TextField
+              fullWidth
+              size="small"
+              inputRef={inputRef}
+              placeholder="키워드 또는 사건번호 입력"
+            />
+            <IconButton onClick={handleClickSearchButton}>
+              <ArrowUpward />
+            </IconButton>
+          </Box>
         </div>
       </section>
       <section className="section-two">2</section>
