@@ -14,7 +14,7 @@ import MainLogo from "@/assets/svg/MainLogo";
 
 const StyledAppBar = styled(MuiAppBar)<{ location: string }>(
   ({ location }) => ({
-    background: "transparent",
+    background: location === "/" ? "transparent" : "#fff",
     boxShadow: "none",
 
     " .MuiToolbar-root": {
