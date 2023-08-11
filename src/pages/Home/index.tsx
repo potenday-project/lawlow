@@ -8,11 +8,13 @@ import styled from "styled-components";
 
 import MainBackground from "@/assets/svg/MainBackground";
 import MainPageLogo from "@/assets/svg/MainPageLogo";
+import ScrollUpIcon from "@/assets/svg/ScrollUpIcon";
 import SearchIcon from "@/assets/svg/SearchIcon";
 import { useStore } from "@stores/index";
 
 const Wrapper = styled.div`
   height: 100vh;
+  background: rgba(255, 126, 32, 1);
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -29,13 +31,14 @@ const Wrapper = styled.div`
   .section-one {
     display: flex;
     flex-direction: column;
+    background: #fff;
+    border-radius: 0px 0px 50px 50px;
 
     .main-logo-area {
-      flex: 1;
-      display: flex;
-      padding: 10%;
-      display: flex;
+      flex: 2;
       align-items: center;
+      display: flex;
+      display: flex;
     }
 
     .main-background-area {
@@ -43,52 +46,51 @@ const Wrapper = styled.div`
       height: 289px;
     }
 
-    .search-area {
-      flex: 1;
-      align-items: flex-end;
-      width: 100%;
-      padding: 20px;
+    .bottom-area {
+      max-height: 210px;
       display: flex;
+      flex-direction: column;
+      width: 100%;
 
-      .container {
+      .search-area {
         display: inline-flex;
         width: 100%;
-        gap: 0.5rem;
-        padding-bottom: 45px;
-        align-items: center;
-      }
+        padding: 20px;
+        gap: 10px;
 
-      .MuiInputBase-root {
-        border-radius: 28px;
-        border: 2px solid var(--orange, #ffbc10);
-        background: var(--grey-3, rgba(225, 221, 209, 0.42));
-        box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
+        .MuiInputBase-root {
+          border-radius: 28px;
+          border: 2px solid var(--orange, #ffbc10);
+          background: var(--grey-3, rgba(225, 221, 209, 0.42));
+          box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
 
-        &.Mui-focused {
-          & .MuiOutlinedInput-notchedOutline {
-            border-color: #ff7e20;
+          &.Mui-focused {
+            & .MuiOutlinedInput-notchedOutline {
+              border-color: #ff7e20;
+            }
+          }
+
+          .MuiInputBase-input {
+            color: #000;
           }
         }
 
-        .MuiInputBase-input {
-          color: #000;
+        .MuiIconButton-root {
+          background-color: rgba(255, 188, 16, 1);
+          color: #ffffff;
+          box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
         }
       }
 
-      .MuiIconButton-root {
-        background-color: rgba(255, 188, 16, 1);
-        color: #ffffff;
-        box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
+      .scroll-up-area {
+        justify-content: center;
+        display: flex;
+        padding: 20px;
       }
     }
   }
 
   .section-two {
-    background-color: yellow;
-  }
-
-  .section-three {
-    background-color: blue;
   }
 `;
 
@@ -174,8 +176,8 @@ const Home = (): ReactElement => {
         <Box className="main-background-area">
           <MainBackground />
         </Box>
-        <div className="search-area">
-          <Box className="container">
+        <Box className="bottom-area">
+          <Box className="search-area">
             <TextField
               fullWidth
               size="small"
@@ -186,10 +188,12 @@ const Home = (): ReactElement => {
               <SearchIcon />
             </IconButton>
           </Box>
-        </div>
+          <Box className="scroll-up-area">
+            <ScrollUpIcon />
+          </Box>
+        </Box>
       </section>
       <section className="section-two">2</section>
-      <section className="section-three">3</section>
     </Wrapper>
   );
 };
