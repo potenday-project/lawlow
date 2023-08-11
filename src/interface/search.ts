@@ -1,4 +1,4 @@
-const SEARCH_TAB_TYPES = ["PRECEDENT", "LEGISLATION"] as const;
+const SEARCH_TAB_TYPES = ["presc", "law"] as const;
 export type SearchTabType = (typeof SEARCH_TAB_TYPES)[number];
 export const SEARCH_TAB_INFOS: {
   label: string;
@@ -6,29 +6,20 @@ export const SEARCH_TAB_INFOS: {
 }[] = [
   {
     label: "판례",
-    value: "PRECEDENT",
+    value: "presc",
   },
   {
     label: "현행 법령",
-    value: "LEGISLATION",
+    value: "law",
   },
 ];
 
-const SORT_TYPES = ["DESC", "ACCURACY"] as const;
-export type SortType = (typeof SORT_TYPES)[number];
-export const SORT_TYPE_INFOS: {
-  label: string;
-  value: SortType;
-}[] = [
-  {
-    label: "최신순",
-    value: "DESC",
-  },
-  {
-    label: "정확도순",
-    value: "ACCURACY",
-  },
-];
+export interface BriefSearchRequest {
+  q: string; // 검색어
+  type: SearchTabType;
+  page: number;
+  size: number;
+}
 
 export interface BriefSearchResult {
   id: number;

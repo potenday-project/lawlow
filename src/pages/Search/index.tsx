@@ -10,7 +10,6 @@ import { observer } from "mobx-react-lite";
 
 import { ArrowBack, ArrowForwardIos } from "@mui/icons-material";
 import {
-  Divider,
   IconButton,
   TextField,
   TextFieldProps,
@@ -32,9 +31,7 @@ import { useStore } from "@/stores";
 import {
   BriefSearchResult,
   SEARCH_TAB_INFOS,
-  SORT_TYPE_INFOS,
   SearchTabType,
-  SortType,
 } from "@interface/search";
 
 const ContentWrapper = styled.main`
@@ -82,31 +79,41 @@ const ContentWrapper = styled.main`
     padding: 1.5rem 1rem 0rem 1rem;
 
     .MuiTabs-root {
-      background-color: #eae3fe;
-      border-radius: 33px;
-      display: inline-flex;
-      padding: 5px 10px;
-      width: 100%;
+        height: 42px;
+        background-color: #FFFDFA;
+        border-radius: 33px;
+        display: inline-flex;
+        padding: 5px 6px;
+        width: 100%;
+        box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
+        align-items: center;
 
-      .MuiTabs-indicator {
-        display: none;
-      }
+        .MuiTabs-scroller {
+            height: 32px;
+        }
 
-      .MuiTab-root {
-        flex: 1;
-        background-color: transparent;
-        color: #000;
-        font-family: Pretendard;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 11px; /* 68.75% */
+        .MuiTabs-indicator {
+            display: none;
+        }
+
+        .MuiTab-root {
+            height: 32px;
+            min-height: 32px;
+            flex: 1;
+            background-color: transparent;
+            color: var(--black-2, #3A3A3A) !important; 
+            text-align: center !important;
+            font-family: SUIT !important; 
+            font-size: 14px !important; 
+            font-style: normal !important; 
+            font-weight: 700 !important; 
+            line-height: normal !important; 
 
         &.Mui-selected {
-          background-color: #3a00e5;
-          border-radius: 33px;
-          color: #fff;
-          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+            background-color: #FDF3DE;
+            border-radius: 33px;
+            color: #FF7E20 !important;
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
         }
       }
     }
@@ -126,31 +133,6 @@ const ContentWrapper = styled.main`
       font-style: normal;
       font-weight: 500;
       line-height: 15px; /* 107.143% */
-    }
-
-    .MuiTabs-root {
-      background-color: transparent;
-      border-radius: 33px;
-
-      .MuiTabs-indicator {
-        display: none;
-      }
-
-      .MuiTab-root {
-        flex: 1;
-        border-radius: 33px;
-        background-color: transparent;
-        font-family: Pretendard;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 15px; /* 68.75% */
-
-        &.Mui-selected {
-          font-weight: 700;
-          transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-        }
-      }
     }
   }
 
@@ -239,16 +221,6 @@ const Search = (): ReactElement => {
     [mainStore],
   );
 
-  const handleChangeSelectedSort = useCallback(
-    (
-      event: SyntheticEvent<Element, Event> | null,
-      value: string | number | null,
-    ) => {
-      mainStore.setSelectedSort(value as SortType);
-    },
-    [mainStore],
-  );
-
   const handleClickListItem = useCallback((id: number) => {
     navigate(`${id}`);
   }, []);
@@ -309,22 +281,6 @@ const Search = (): ReactElement => {
         <section className="total-area">
           <Typography display="inline">전체 검색 결과</Typography>
           <Typography display="inline">{`${(5100).toLocaleString()}건`}</Typography>
-        </section>
-        <section>
-          <Tabs
-            value={mainStore.selectedSort}
-            onChange={handleChangeSelectedSort}
-          >
-            <Tab
-              value={SORT_TYPE_INFOS[0].value}
-              label={SORT_TYPE_INFOS[0].label}
-            />
-            <Divider orientation="vertical" variant="middle" flexItem />
-            <Tab
-              value={SORT_TYPE_INFOS[1].value}
-              label={SORT_TYPE_INFOS[1].label}
-            />
-          </Tabs>
         </section>
       </section>
       <section className="list-area">
