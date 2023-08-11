@@ -2,14 +2,26 @@ import { ReactElement, useCallback, useEffect, useRef } from "react";
 
 import { observer } from "mobx-react-lite";
 
-import { Box, IconButton, TextField, TextFieldProps } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Paper,
+  TextField,
+  TextFieldProps,
+} from "@mui/material";
+import Carousel from "react-material-ui-carousel";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
+import LawlowUseText from "@/assets/svg/LawlowUseText";
 import MainBackground from "@/assets/svg/MainBackground";
 import MainPageLogo from "@/assets/svg/MainPageLogo";
 import ScrollUpIcon from "@/assets/svg/ScrollUpIcon";
 import SearchIcon from "@/assets/svg/SearchIcon";
+import Slider1 from "@/assets/svg/Slider1";
+import Slider2 from "@/assets/svg/Slider2";
+import Slider3 from "@/assets/svg/Slider3";
+import Slider4 from "@/assets/svg/Slider4";
 import { useStore } from "@stores/index";
 
 const Wrapper = styled.div`
@@ -23,14 +35,13 @@ const Wrapper = styled.div`
   section {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     font-size: 100px;
   }
 
   .section-one {
-    display: flex;
-    flex-direction: column;
     background: #fff;
     border-radius: 0px 0px 50px 50px;
 
@@ -91,6 +102,60 @@ const Wrapper = styled.div`
   }
 
   .section-two {
+    .title-area {
+      width: 100%;
+      padding: 87px 20px 35px 20px;
+      display: inline-flex;
+
+      color: var(--white-1, #fff);
+      font-family: Jalnan;
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 22px; /* 68.75% */
+    }
+
+    .slider-area {
+      flex: 1;
+      width: 100%;
+      padding: 20px;
+
+      .carousel {
+        .CarouselItem {
+          display: flex;
+          justify-content: center;
+        }
+
+        .Carousel-buttonWrapper-6 {
+          height: 400px;
+          top: -10%;
+          .MuiIconButton-root {
+            color: #fff;
+          }
+        }
+
+        .Carousel-indicators-2 {
+          display: flex;
+          justify-content: center;
+          align-items: baseline;
+          margin-top: 30px;
+
+          .Carousel-active-5 {
+            color: rgb(255, 188, 16);
+          }
+        }
+
+        .MuiPaper-root {
+          border-radius: 64.125px;
+          background: var(--white-1, #fff);
+          width: 257px;
+          height: 400px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
   }
 `;
 
@@ -193,7 +258,32 @@ const Home = (): ReactElement => {
           </Box>
         </Box>
       </section>
-      <section className="section-two">2</section>
+      <section className="section-two">
+        <Box className="title-area">
+          <LawlowUseText />
+        </Box>
+        <Box className="slider-area">
+          <Carousel
+            className="carousel"
+            autoPlay
+            navButtonsAlwaysVisible
+            animation="slide"
+          >
+            <Paper>
+              <Slider1 />
+            </Paper>
+            <Paper>
+              <Slider2 />
+            </Paper>
+            <Paper>
+              <Slider3 />
+            </Paper>
+            <Paper>
+              <Slider4 />
+            </Paper>
+          </Carousel>
+        </Box>
+      </section>
     </Wrapper>
   );
 };
