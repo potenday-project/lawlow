@@ -15,6 +15,9 @@ const StyledDiv = styled.div`
     background-color: rgba(255, 188, 16, 1);
     color: #ffffff;
     box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
+    &:hover {
+      background-color: rgba(255, 188, 16, 1);
+    }
   }
 
   .MuiInputBase-root {
