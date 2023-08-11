@@ -9,10 +9,13 @@ class MainStore {
 
   totalElements: number;
 
+  selectedPage: number;
+
   constructor() {
     this.searchWords = [];
     this.selectedTab = "prec";
     this.totalElements = 0;
+    this.selectedPage = 1;
 
     makeAutoObservable(this);
   }
@@ -35,6 +38,10 @@ class MainStore {
 
   setTotalElements(value: number) {
     this.totalElements = value;
+  }
+
+  setSelectedPage(value: number) {
+    this.selectedPage = value;
   }
 }
 
