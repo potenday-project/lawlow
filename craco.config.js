@@ -10,6 +10,7 @@ module.exports = {
       "@interface": path.resolve(__dirname, "src/interface"),
       "@style": path.resolve(__dirname, "src/style"),
       "@assets": path.resolve(__dirname, "src/assets"),
+      "@api": path.resolve(__dirname, "src/api"),
     },
   },
   babel: {
