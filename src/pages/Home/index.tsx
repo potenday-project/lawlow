@@ -1,14 +1,15 @@
-import { ReactElement, useCallback, useEffect, useRef } from "react";
+import {
+  ChangeEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { observer } from "mobx-react-lite";
 
-import {
-  Box,
-  IconButton,
-  Paper,
-  TextField,
-  TextFieldProps,
-} from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
@@ -17,12 +18,13 @@ import LawlowUseText from "@/assets/svg/LawlowUseText";
 import MainBackground from "@/assets/svg/MainBackground";
 import MainPageLogo from "@/assets/svg/MainPageLogo";
 import ScrollUpIcon from "@/assets/svg/ScrollUpIcon";
-import SearchIcon from "@/assets/svg/SearchIcon";
 import Slider1 from "@/assets/svg/Slider1";
 import Slider2 from "@/assets/svg/Slider2";
 import Slider3 from "@/assets/svg/Slider3";
 import Slider4 from "@/assets/svg/Slider4";
 import { useStore } from "@stores/index";
+
+import SearchBarWithButton from "../components/SearchBarWithButton";
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -64,33 +66,8 @@ const Wrapper = styled.div`
       width: 100%;
 
       .search-area {
-        display: inline-flex;
-        width: 100%;
+        display: flex;
         padding: 20px;
-        gap: 10px;
-
-        .MuiInputBase-root {
-          border-radius: 28px;
-          border: 2px solid var(--orange, #ffbc10);
-          background: var(--grey-3, rgba(225, 221, 209, 0.42));
-          box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
-
-          &.Mui-focused {
-            & .MuiOutlinedInput-notchedOutline {
-              border-color: #ff7e20;
-            }
-          }
-
-          .MuiInputBase-input {
-            color: #000;
-          }
-        }
-
-        .MuiIconButton-root {
-          background-color: rgba(255, 188, 16, 1);
-          color: #ffffff;
-          box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
-        }
       }
 
       .scroll-up-area {
@@ -161,15 +138,25 @@ const Wrapper = styled.div`
 
 const Home = (): ReactElement => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const inputRef = useRef<TextFieldProps | null>(null);
   const { mainStore } = useStore();
-
   const navigate = useNavigate();
-  const handleClickSearchButton = useCallback(() => {
-    mainStore.resetSearchWords();
-    mainStore.addSearchWord(inputRef.current?.value as string);
-    navigate("/search");
-  }, [navigate]);
+  const [value, setValue] = useState("");
+
+  const handleTextFieldChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      setValue(e.target.value);
+    },
+    [],
+  );
+
+  const handleClickSearchButton = useCallback(
+    (v: string) => {
+      mainStore.resetSearchWords();
+      mainStore.addSearchWord(v);
+      navigate("/search");
+    },
+    [navigate],
+  );
 
   useEffect(() => {
     const wheelHandler = (e: WheelEvent) => {
@@ -243,15 +230,12 @@ const Home = (): ReactElement => {
         </Box>
         <Box className="bottom-area">
           <Box className="search-area">
-            <TextField
-              fullWidth
-              size="small"
-              inputRef={inputRef}
+            <SearchBarWithButton
+              value={value}
+              onChange={handleTextFieldChange}
               placeholder="키워드 또는 사건번호 입력"
+              onClick={handleClickSearchButton}
             />
-            <IconButton onClick={handleClickSearchButton}>
-              <SearchIcon />
-            </IconButton>
           </Box>
           <Box className="scroll-up-area">
             <ScrollUpIcon />
