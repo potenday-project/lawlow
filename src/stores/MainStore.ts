@@ -7,9 +7,12 @@ class MainStore {
 
   selectedTab: SearchTabType;
 
+  totalElements: number;
+
   constructor() {
     this.searchWords = [];
-    this.selectedTab = "presc";
+    this.selectedTab = "prec";
+    this.totalElements = 0;
 
     makeAutoObservable(this);
   }
@@ -28,6 +31,10 @@ class MainStore {
 
   setSelectedTab(value: SearchTabType) {
     this.selectedTab = value;
+  }
+
+  setTotalElements(value: number) {
+    this.totalElements = value;
   }
 }
 
