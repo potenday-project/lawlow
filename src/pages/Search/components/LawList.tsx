@@ -141,7 +141,13 @@ const LawList = ({ q }: Props): ReactElement => {
             {laws.map((law) => (
               <ListItemButton
                 key={law.type === "prec" ? law.사건번호 : law.기본정보.법령ID}
-                onClick={() => handleClickListItem(1)}
+                onClick={() =>
+                  handleClickListItem(
+                    law.type === "prec"
+                      ? law.판례정보일련번호
+                      : law.기본정보.법령ID,
+                  )
+                }
               >
                 <Box className="item-container">
                   <Box className="title-container">

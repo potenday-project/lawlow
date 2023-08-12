@@ -126,7 +126,7 @@ const ContentWrapper = styled.main`
         max-height: 60px;
         overflow: hidden;
         text-overflow: ellipsis;
-        whitespace: nowrap;
+        white-space: nowrap;
         font-size: 12px;
         font-weight: 500;
       }
@@ -159,10 +159,7 @@ const Search = (): ReactElement => {
 
   const handleClickGoBack = useCallback(() => {
     mainStore.popSearchWord();
-    console.log(
-      mainStore.searchWords,
-      mainStore.searchWords[mainStore.searchWords.length - 1],
-    );
+
     if (mainStore.searchWords.length > 0) {
       setValue(mainStore.searchWords[mainStore.searchWords.length - 1] ?? "");
     } else navigate("/");
