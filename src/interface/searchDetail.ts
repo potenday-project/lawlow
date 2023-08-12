@@ -2,7 +2,7 @@ import { SearchTabType } from "./search";
 
 export type DetailTabType<T extends SearchTabType> = T extends "prec"
   ? "ai" | "prec"
-  : "ai" | "law";
+  : "ai" | "statute";
 export const DETAIL_TAB_INFOS: {
   [key in SearchTabType]: { label: string; value: DetailTabType<key> }[];
 } = {
@@ -16,14 +16,14 @@ export const DETAIL_TAB_INFOS: {
       value: "prec",
     },
   ],
-  law: [
+  statute: [
     {
       label: "쉬운 법령",
       value: "ai",
     },
     {
       label: "법령 원문",
-      value: "law",
+      value: "statute",
     },
   ],
 };

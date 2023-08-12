@@ -10,6 +10,6 @@ export const PROFILE_TAB_INFOS: {
   },
   {
     label: "저장한 법령",
-    value: "law",
+    value: "statute",
   },
 ];

@@ -1,4 +1,4 @@
-const SEARCH_TAB_TYPES = ["prec", "law"] as const;
+const SEARCH_TAB_TYPES = ["prec", "statute"] as const;
 export type SearchTabType = (typeof SEARCH_TAB_TYPES)[number];
 export const SEARCH_TAB_INFOS: {
   label: string;
@@ -10,7 +10,7 @@ export const SEARCH_TAB_INFOS: {
   },
   {
     label: "현행 법령",
-    value: "law",
+    value: "statute",
   },
 ];
 
@@ -87,7 +87,7 @@ interface LawAddendum {
   부칙내용: string[];
 }
 interface LawDetailData {
-  type: "law";
+  type: "statute";
   // 법령 데이터
   기본정보: {
     법령ID: number;

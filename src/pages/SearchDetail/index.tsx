@@ -205,7 +205,7 @@ const SearchDetail = (): ReactElement => {
                 className="fallback-container"
                 sx={{
                   display:
-                    (mainStore.selectedTab === "prec" ? "prec" : "law") !==
+                    (mainStore.selectedTab === "prec" ? "prec" : "statute") !==
                     selectedTab
                       ? "none !important"
                       : "flex",
@@ -222,7 +222,7 @@ const SearchDetail = (): ReactElement => {
             <TabPanel
               selectedSearchTab={mainStore.selectedTab}
               selectedValue={selectedTab}
-              value={mainStore.selectedTab === "prec" ? "prec" : "law"}
+              value={mainStore.selectedTab === "prec" ? "prec" : "statute"}
               id={id ?? ""}
               setTitle={setTitle}
             />
