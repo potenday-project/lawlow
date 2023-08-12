@@ -13,8 +13,10 @@ import styled from "styled-components";
 import MainPageLogo from "@/assets/svg/MainPageLogo";
 
 const ContentWrapper = styled.main`
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  top: 56px;
+  width: 100%;
+  height: calc(100% - 56px);
   display: flex;
   flex-direction: column;
 
@@ -97,7 +99,7 @@ const Login = (): ReactElement => {
 
       window.dispatchEvent(new Event("storage"));
 
-      navigate("/");
+      navigate(-1);
     },
     [],
   );
