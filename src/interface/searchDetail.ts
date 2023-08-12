@@ -32,3 +32,16 @@ export interface LawDetailRequest {
   type: SearchTabType;
   id: string | number;
 }
+
+export interface AiDetailRequest {
+  id?: string | number;
+  type?: SearchTabType;
+  recentSummaryMsg?: string;
+  enabled?: boolean;
+}
+
+export interface AiResponseData {
+  easyTitle?: string;
+  summary: string;
+  keywords?: string[];
+}
