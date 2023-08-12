@@ -21,11 +21,6 @@ export interface LawsSearchRequest {
   size: number;
 }
 
-export interface LawDetailRequest {
-  type: SearchTabType;
-  id: string | number;
-}
-
 export interface Page<T> {
   list: T[];
   first: boolean;

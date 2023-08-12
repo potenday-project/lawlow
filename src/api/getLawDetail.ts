@@ -1,6 +1,7 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
-import { GetLawsResponseType, LawDetailRequest } from "@/interface/search";
+import { GetLawsResponseType } from "@/interface/search";
+import { LawDetailRequest } from "@/interface/searchDetail";
 
 import { http } from "./_http";
 import { API_KEY } from "./constants";

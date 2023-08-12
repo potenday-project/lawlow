@@ -18,9 +18,9 @@ class Http {
     });
   }
 
-  async get<Response = unknown>(url: string) {
+  async get<Response = unknown>(url: string, conf: AxiosRequestConfig = {}) {
     return this.axios
-      .get<LawLowResponse<Response>>(url)
+      .get<LawLowResponse<Response>>(url, { ...conf })
       .then((res) => res.data.data);
   }
 
@@ -35,6 +35,18 @@ class Http {
           ...conf.headers,
           "User-Id": localStorage.getItem("credential"),
         },
+      })
+      .then((res) => res.data.data);
+  }
+
+  async post<Request = any, Response = unknown>(
+    url: string,
+    data?: Request,
+    conf: AxiosRequestConfig = {},
+  ) {
+    return this.axios
+      .post<LawLowResponse<Response>>(url, data, {
+        ...conf,
       })
       .then((res) => res.data.data);
   }
