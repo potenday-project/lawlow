@@ -1,6 +1,7 @@
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 
 import { Box, Button, Divider } from "@mui/material";
+import { useLocation, useNavigate } from "react-router";
 import styled from "styled-components";
 
 import GreyLogo from "@/assets/svg/GreyLogo";
@@ -29,6 +30,8 @@ const StyledFooter = styled.section`
 `;
 
 const Footer = (): ReactElement => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(
     localStorage.getItem("credential") !== null &&
       localStorage.getItem("credential") !== "",
@@ -37,6 +40,7 @@ const Footer = (): ReactElement => {
   const handleClickLogout = useCallback(() => {
     localStorage.clear();
     window.dispatchEvent(new Event("storage"));
+    if (location.pathname === "/my-profile") navigate(-1);
   }, []);
 
   useEffect(() => {
