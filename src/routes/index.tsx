@@ -1,26 +1,35 @@
+/* eslint-disable react/no-unstable-nested-components */
+import { Suspense } from "react";
+
+import {
+  // useQueryErrorResetBoundary,
+  QueryErrorResetBoundary,
+} from "@tanstack/react-query";
 import { createBrowserRouter } from "react-router-dom";
-import { styled } from "styled-components";
+
+import ErrorBoundary from "@/components/ErrorBoundary";
+import ErrorFallback from "@/components/ErrorFallback";
 
 import AppRoutes from "./AppRoutes";
 
-const TodoContainer = styled.section`
-  display: flex;
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  font-size: 50px;
-  font-weight: 500;
-`;
-
-const TodoPage = () => {
-  return <TodoContainer>⚙️작업중⚙️</TodoContainer>;
+const ErrorLayer = () => {
+  return (
+    <Suspense>
+      <QueryErrorResetBoundary>
+        {() => (
+          <ErrorBoundary fallbackComponent={ErrorFallback}>
+            <AppRoutes />
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
+    </Suspense>
+  );
 };
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppRoutes />,
+    element: <ErrorLayer />,
     children: [
       {
         path: "",
@@ -68,8 +77,8 @@ const router = createBrowserRouter([
       {
         path: "*",
         async lazy() {
-          const NotFound = await TodoPage;
-          return { Component: NotFound };
+          const NotFound = await import("@pages/NotFound");
+          return { Component: NotFound.default };
         },
       },
     ],

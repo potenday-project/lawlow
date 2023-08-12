@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Axios, { AxiosRequestConfig } from "axios";
 
-interface LawLowResponse<T = unknown> {
+export interface LawLowResponse<T = unknown> {
   success: boolean;
   data?: T;
   statusCode?: number;
-  errorMessage?: string;
-  errorDetail?: string;
+  message?: string[];
+  detail?: string[];
 }
 
 class Http {

@@ -14,6 +14,7 @@ const ContentWrapper = styled.main`
   gap: 3rem;
   justify-content: center;
   align-items: center;
+  font-family: SUIT;
   font-size: 20px;
   font-weight: 500;
 
