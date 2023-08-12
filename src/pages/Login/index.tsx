@@ -5,17 +5,70 @@ import {
   GoogleOAuthProvider,
   UserDataWithCredential,
 } from "@moeindana/google-oauth";
-import { Box } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
+import { Box, IconButton } from "@mui/material";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+
+import MainPageLogo from "@/assets/svg/MainPageLogo";
 
 const ContentWrapper = styled.main`
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+
+  .title-area {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 15px;
+
+    .MuiIconButton-root {
+      position: absolute;
+      left: 20px;
+    }
+  }
+
+  .logo-area {
+    height: 40%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .text-area {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    .text {
+      background-image: linear-gradient(
+        to bottom,
+        transparent 50%,
+        #fff27a 50%
+      );
+      color: var(--black, #1b1b1b);
+      font-family: SUIT;
+      font-size: 19px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+  }
+
+  .login-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding-top: 70px;
+  }
 `;
 
 const Login = (): ReactElement => {
@@ -25,6 +78,10 @@ const Login = (): ReactElement => {
   );
 
   const navigate = useNavigate();
+
+  const handleClickGoBack = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
 
   const handleClickLogo = useCallback(() => {
     navigate("/");
@@ -62,19 +119,33 @@ const Login = (): ReactElement => {
 
   return (
     <ContentWrapper>
-      <Box onClick={handleClickLogo}>lawlow</Box>
+      <Box className="title-area">
+        <IconButton onClick={handleClickGoBack}>
+          <ArrowBack />
+        </IconButton>
+        <p>로그인</p>
+      </Box>
+      <Box className="logo-area" onClick={handleClickLogo}>
+        <MainPageLogo />
+      </Box>
+      <Box className="text-area">
+        <Box className="text">로그인하고, 필요한 판례를</Box>
+        <Box className="text">저장하고 관리해보세요!</Box>
+      </Box>
       {!isLogin && (
-        <GoogleOAuthProvider
-          clientId={process.env.REACT_APP_GOOGOLE_LOGIN_CLIENT_ID ?? ""}
-        >
-          <GoogleLogin
-            onSuccess={handleGoogleLoginOnSuccess}
-            onError={() => {
-              console.log("Login Failed");
-            }}
-            cancel_on_tap_outside
-          />
-        </GoogleOAuthProvider>
+        <Box className="login-area">
+          <GoogleOAuthProvider
+            clientId={process.env.REACT_APP_GOOGOLE_LOGIN_CLIENT_ID ?? ""}
+          >
+            <GoogleLogin
+              onSuccess={handleGoogleLoginOnSuccess}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+              cancel_on_tap_outside
+            />
+          </GoogleOAuthProvider>
+        </Box>
       )}
     </ContentWrapper>
   );
