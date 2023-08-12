@@ -88,7 +88,7 @@ const TabPanel = ({
           />
         </>
       )}
-      {data?.type === "law" && (
+      {data?.type === "statute" && (
         <>
           <Box className="title-container">
             <Box className="title">{`현행 법령[시행 ${(() => {
