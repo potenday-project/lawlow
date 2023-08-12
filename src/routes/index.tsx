@@ -31,10 +31,24 @@ const router = createBrowserRouter([
         },
       },
       {
-        path: "signin",
+        path: "login",
         async lazy() {
-          const Signin = await TodoPage;
-          return { Component: Signin };
+          const Login = await import("@pages/Login");
+          return { Component: Login.default };
+        },
+      },
+      {
+        path: "my-profile",
+        async lazy() {
+          const Profile = await import("@pages/MyProfile");
+          return { Component: Profile.default };
+        },
+      },
+      {
+        path: "my-profile-setting",
+        async lazy() {
+          const ProfileSetting = await import("@pages/MyProfileSetting");
+          return { Component: ProfileSetting.default };
         },
       },
       {
@@ -59,20 +73,6 @@ const router = createBrowserRouter([
         },
       },
     ],
-  },
-  {
-    path: "login",
-    async lazy() {
-      const Login = await import("@pages/Login");
-      return { Component: Login.default };
-    },
-  },
-  {
-    path: "my-profile",
-    async lazy() {
-      const Profile = await import("@pages/MyProfile");
-      return { Component: Profile.default };
-    },
   },
 ]);
 
