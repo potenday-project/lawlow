@@ -21,6 +21,15 @@ const StyledAppBar = styled(MuiAppBar)<{ location: string }>(
       display: "inline-flex",
       justifyContent: location === "/" ? "flex-end" : "space-between",
     },
+
+    " .login": {
+      display:
+        location === "/login" ||
+        location === "/my-profile" ||
+        location === "/my-profile-setting"
+          ? "none"
+          : "flex",
+    },
   }),
 );
 
@@ -83,10 +92,13 @@ const AppBar = () => {
           </Box>
         )}
         {!isLogin && (
-          <StyledButton onClick={handleClickLogin}>로그인</StyledButton>
+          <StyledButton className="login" onClick={handleClickLogin}>
+            로그인
+          </StyledButton>
         )}
         {isLogin && (
           <Avatar
+            className="login"
             onClick={handleClickProfile}
             alt="profile"
             src={localStorage.getItem("picture") ?? ""}
