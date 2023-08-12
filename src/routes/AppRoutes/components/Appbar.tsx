@@ -2,42 +2,46 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import {
   AppBar as MuiAppBar,
-  Toolbar as MuiToolbar,
-  Typography,
   Button,
   styled,
   Avatar,
+  Toolbar,
+  Box,
 } from "@mui/material";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
-const StyledAppBar = styled(MuiAppBar)({
-  backgroundColor: "transparent",
-  boxShadow: "none",
-});
+import MainLogo from "@/assets/svg/MainLogo";
 
-const StyledToolbar = styled(MuiToolbar)({
-  display: "inline-flex",
-  justifyContent: "space-between",
-});
+const StyledAppBar = styled(MuiAppBar)<{ location: string }>(
+  ({ location }) => ({
+    background: location === "/" ? "transparent" : "#fff",
+    boxShadow: "none",
+
+    " .MuiToolbar-root": {
+      display: "inline-flex",
+      justifyContent: location === "/" ? "flex-end" : "space-between",
+    },
+  }),
+);
 
 const StyledButton = styled(Button)({
   padding: "8px 12px",
-  borderRadius: "8px",
-  background: "var(--primary-subtle, #F7F5FF)",
-  border: "1px solid #3A00E5",
+  borderRadius: "19px",
+  background: "var(--grey-3, rgba(225, 221, 209, 0.42))",
 
   // font
-  color: "var(--primary, #3A00E5)",
-  fontFamily: "Work Sans",
-  fontSize: "12px",
+  color: "var(--deep-orange, #FF7E20)",
+  fontFamily: "SUIT",
+  fontSize: "14px",
   fontStyle: "normal",
-  fontWeight: 500,
-  lineHeight: "16px",
-  letterSpacing: "0.6px",
+  fontWeight: 700,
+  lineHeight: "normal",
 });
 
 const AppBar = () => {
+  const location = useLocation();
   const navigate = useNavigate();
+
   const [isLogin, setIsLogin] = useState(
     localStorage.getItem("credential") !== null &&
       localStorage.getItem("credential") !== "",
@@ -71,9 +75,13 @@ const AppBar = () => {
   }, []);
 
   return (
-    <StyledAppBar>
-      <StyledToolbar>
-        <Typography onClick={handleClickLogo}>로우로우</Typography>
+    <StyledAppBar location={location.pathname}>
+      <Toolbar>
+        {location.pathname !== "/" && (
+          <Box onClick={handleClickLogo}>
+            <MainLogo />
+          </Box>
+        )}
         {!isLogin && (
           <StyledButton onClick={handleClickLogin}>로그인</StyledButton>
         )}
@@ -84,7 +92,7 @@ const AppBar = () => {
             src={localStorage.getItem("picture") ?? ""}
           />
         )}
-      </StyledToolbar>
+      </Toolbar>
     </StyledAppBar>
   );
 };

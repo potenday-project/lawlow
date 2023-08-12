@@ -6,17 +6,18 @@ const darkTheme = createTheme({
     text: {
       primary: "#fff",
     },
-    // primary: amber,
-    // divider: amber[200],
-    // text: {
-    //   primary: grey[900],
-    //   secondary: grey[800],
-    // },
+  },
+});
+
+const lightTheme = createTheme({
+  palette: {
+    mode: "light",
   },
 });
 
 const themes = {
   dark: darkTheme,
+  light: lightTheme,
 };
 
 export default themes;

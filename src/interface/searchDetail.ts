@@ -1,28 +1,47 @@
-const DETAIL_TAB_TYPES = ["original", "info"] as const;
-export type DetailTabType = (typeof DETAIL_TAB_TYPES)[number];
-export const DETAIL_TAB_INFOS: {
-  label: string;
-  value: DetailTabType;
-}[] = [
-  {
-    label: "판례 원문",
-    value: "original",
-  },
-  {
-    label: "판례 정보",
-    value: "info",
-  },
-];
+import { SearchTabType } from "./search";
 
-export interface SearchDetailResult {
-  id: string;
-  title: string;
-  subTitle: string;
-  original: string; // 판례 원문
-  info: string; // 판례 정보
+export type DetailTabType<T extends SearchTabType> = T extends "prec"
+  ? "ai" | "prec"
+  : "ai" | "law";
+export const DETAIL_TAB_INFOS: {
+  [key in SearchTabType]: { label: string; value: DetailTabType<key> }[];
+} = {
+  prec: [
+    {
+      label: "쉬운 판례",
+      value: "ai",
+    },
+    {
+      label: "판례 원문",
+      value: "prec",
+    },
+  ],
+  law: [
+    {
+      label: "쉬운 법령",
+      value: "ai",
+    },
+    {
+      label: "법령 원문",
+      value: "law",
+    },
+  ],
+};
+
+export interface LawDetailRequest {
+  type: SearchTabType;
+  id: string | number;
 }
 
-export interface LawLowResult {
-  content: string;
-  keywords: string[];
+export interface AiDetailRequest {
+  id?: string | number;
+  type?: SearchTabType;
+  recentSummaryMsg?: string;
+  enabled?: boolean;
+}
+
+export interface AiResponseData {
+  easyTitle?: string;
+  summary: string;
+  keywords?: string[];
 }

@@ -1,16 +1,34 @@
-import { ReactElement, useCallback, useEffect, useRef } from "react";
+import {
+  ChangeEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { observer } from "mobx-react-lite";
 
-import { ArrowUpward } from "@mui/icons-material";
-import { IconButton, TextField, TextFieldProps } from "@mui/material";
+import { Box, Paper } from "@mui/material";
+import Carousel from "react-material-ui-carousel";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
+import LawlowUseText from "@/assets/svg/LawlowUseText";
+import MainBackground from "@/assets/svg/MainBackground";
+import MainPageLogo from "@/assets/svg/MainPageLogo";
+import ScrollUpIcon from "@/assets/svg/ScrollUpIcon";
+import Slider1 from "@/assets/svg/Slider1";
+import Slider2 from "@/assets/svg/Slider2";
+import Slider3 from "@/assets/svg/Slider3";
+import Slider4 from "@/assets/svg/Slider4";
 import { useStore } from "@stores/index";
+
+import SearchBarWithButton from "../components/SearchBarWithButton";
 
 const Wrapper = styled.div`
   height: 100vh;
+  background: rgba(255, 126, 32, 1);
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
@@ -19,69 +37,126 @@ const Wrapper = styled.div`
   section {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     font-size: 100px;
   }
 
-  .section-one::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    pointer-events: none;
-  }
-
   .section-one {
-    background-image: url("/temp.gif");
-    display: flex;
-    align-items: end;
+    background: #fff;
+    border-radius: 0px 0px 50px 50px;
 
-    .search-area {
-      flex: 1;
-      padding: 2rem 1rem;
-      display: inline-flex;
-      gap: 0.5rem;
+    .main-logo-area {
+      flex: 2;
+      align-items: center;
+      display: flex;
+      display: flex;
+    }
 
-      .MuiInputBase-root {
-        background-color: #ffffff;
-        border-radius: 33px;
-        border: 1px solid #3a00e5;
+    .main-background-area {
+      width: 100%;
+      height: 289px;
+    }
 
-        .MuiInputBase-input {
-          color: #000;
-        }
+    .bottom-area {
+      max-height: 210px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      .search-area {
+        display: flex;
+        padding: 20px;
       }
 
-      .MuiIconButton-root {
-        background-color: #3a00e5;
-        color: #ffffff;
+      .scroll-up-area {
+        justify-content: center;
+        display: flex;
+        padding: 20px;
       }
     }
   }
 
   .section-two {
-    background-color: yellow;
-  }
+    .title-area {
+      width: 100%;
+      padding: 87px 20px 35px 20px;
+      display: inline-flex;
 
-  .section-three {
-    background-color: blue;
+      color: var(--white-1, #fff);
+      font-family: Jalnan;
+      font-size: 32px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 22px; /* 68.75% */
+    }
+
+    .slider-area {
+      flex: 1;
+      width: 100%;
+      padding: 20px;
+
+      .carousel {
+        .CarouselItem {
+          display: flex;
+          justify-content: center;
+        }
+
+        .Carousel-buttonWrapper-6 {
+          height: 400px;
+          top: -10%;
+          .MuiIconButton-root {
+            color: #fff;
+          }
+        }
+
+        .Carousel-indicators-2 {
+          display: flex;
+          justify-content: center;
+          align-items: baseline;
+          margin-top: 30px;
+
+          .Carousel-active-5 {
+            color: rgb(255, 188, 16);
+          }
+        }
+
+        .MuiPaper-root {
+          border-radius: 64.125px;
+          background: var(--white-1, #fff);
+          width: 257px;
+          height: 400px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
   }
 `;
 
 const Home = (): ReactElement => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const inputRef = useRef<TextFieldProps | null>(null);
   const { mainStore } = useStore();
-
   const navigate = useNavigate();
-  const handleClickSearchButton = useCallback(() => {
-    mainStore.setSearchWord(inputRef.current?.value as string);
-    navigate("/search");
-  }, [navigate]);
+  const [value, setValue] = useState("");
+
+  const handleTextFieldChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      setValue(e.target.value);
+    },
+    [],
+  );
+
+  const handleClickSearchButton = useCallback(
+    (v: string) => {
+      mainStore.resetSearchWords();
+      mainStore.addSearchWord(v);
+      navigate("/search");
+    },
+    [navigate],
+  );
 
   useEffect(() => {
     const wheelHandler = (e: WheelEvent) => {
@@ -147,15 +222,52 @@ const Home = (): ReactElement => {
   return (
     <Wrapper ref={ref}>
       <section className="section-one">
-        <div className="search-area">
-          <TextField fullWidth size="small" inputRef={inputRef} />
-          <IconButton onClick={handleClickSearchButton}>
-            <ArrowUpward />
-          </IconButton>
-        </div>
+        <Box className="main-logo-area">
+          <MainPageLogo />
+        </Box>
+        <Box className="main-background-area">
+          <MainBackground />
+        </Box>
+        <Box className="bottom-area">
+          <Box className="search-area">
+            <SearchBarWithButton
+              value={value}
+              onChange={handleTextFieldChange}
+              placeholder="키워드 또는 사건번호 입력"
+              onClick={handleClickSearchButton}
+            />
+          </Box>
+          <Box className="scroll-up-area">
+            <ScrollUpIcon />
+          </Box>
+        </Box>
       </section>
-      <section className="section-two">2</section>
-      <section className="section-three">3</section>
+      <section className="section-two">
+        <Box className="title-area">
+          <LawlowUseText />
+        </Box>
+        <Box className="slider-area">
+          <Carousel
+            className="carousel"
+            autoPlay
+            navButtonsAlwaysVisible
+            animation="slide"
+          >
+            <Paper>
+              <Slider1 />
+            </Paper>
+            <Paper>
+              <Slider2 />
+            </Paper>
+            <Paper>
+              <Slider3 />
+            </Paper>
+            <Paper>
+              <Slider4 />
+            </Paper>
+          </Carousel>
+        </Box>
+      </section>
     </Wrapper>
   );
 };

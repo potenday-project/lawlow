@@ -1,32 +1,47 @@
 import { makeAutoObservable } from "mobx";
 
-import { SearchTabType, SortType } from "@/interface/search";
+import { SearchTabType } from "@/interface/search";
 
 class MainStore {
-  searchWord: string;
+  searchWords: string[];
 
   selectedTab: SearchTabType;
 
-  selectedSort: SortType;
+  totalElements: number;
+
+  selectedPage: number;
 
   constructor() {
-    this.searchWord = "";
-    this.selectedTab = "PRECEDENT";
-    this.selectedSort = "DESC";
+    this.searchWords = [];
+    this.selectedTab = "prec";
+    this.totalElements = 0;
+    this.selectedPage = 1;
 
     makeAutoObservable(this);
   }
 
-  setSearchWord(value: string) {
-    this.searchWord = value;
+  resetSearchWords() {
+    this.searchWords = [];
+  }
+
+  addSearchWord(value: string) {
+    this.searchWords = [...this.searchWords, value];
+  }
+
+  popSearchWord() {
+    this.searchWords = [...this.searchWords.slice(0, -1)];
   }
 
   setSelectedTab(value: SearchTabType) {
     this.selectedTab = value;
   }
 
-  setSelectedSort(value: SortType) {
-    this.selectedSort = value;
+  setTotalElements(value: number) {
+    this.totalElements = value;
+  }
+
+  setSelectedPage(value: number) {
+    this.selectedPage = value;
   }
 }
 
