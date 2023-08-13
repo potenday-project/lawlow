@@ -28,6 +28,7 @@ const StyledTabPanel = styled.div`
     width: 100%;
     justify-content: center;
     .title {
+      min-height: 23px;
       background-image: linear-gradient(
         to bottom,
         transparent 50%,
@@ -164,13 +165,22 @@ const AiTabPanel = ({
     setEnabled(true);
   }, []);
 
+  useEffect(() => {
+    const el = document.getElementById("easy-title");
+    if (el && el.clientHeight > 23) {
+      el.style.background = "#fff27a";
+    }
+  }, []);
+
   return (
     <StyledTabPanel
       role="tabpanel"
       style={{ display: value !== selectedValue ? "none" : "flex" }}
     >
       <Box className="title-container">
-        <Box className="title">{data?.easyTitle}</Box>
+        <Box id="easy-title" className="title">
+          {data?.easyTitle}
+        </Box>
       </Box>
       <Suspense fallback={<Fallback text="더 쉽게 번역 중" />}>
         <Content
