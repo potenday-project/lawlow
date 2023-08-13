@@ -19,6 +19,7 @@ const StyledTabPanel = styled.div`
     width: 100%;
     justify-content: center;
     .title {
+      min-height: 23px;
       background-image: linear-gradient(
         to bottom,
         transparent 50%,
@@ -72,6 +73,13 @@ const TabPanel = ({
     }
   }, [data]);
 
+  useEffect(() => {
+    const el = document.getElementById("law-title");
+    if (el && el.clientHeight > 23) {
+      el.style.background = "#fff27a";
+    }
+  }, []);
+
   return (
     <StyledTabPanel
       role="tabpanel"
@@ -80,7 +88,9 @@ const TabPanel = ({
       {data?.type === "prec" && (
         <>
           <Box className="title-container">
-            <Box className="title">{data.사건명}</Box>
+            <Box id="law-title" className="title">
+              {data.사건명}
+            </Box>
           </Box>
           <Box
             className="content"
@@ -91,7 +101,7 @@ const TabPanel = ({
       {data?.type === "statute" && (
         <>
           <Box className="title-container">
-            <Box className="title">{`현행 법령[시행 ${(() => {
+            <Box id="law-title" className="title">{`현행 법령[시행 ${(() => {
               const str = data.기본정보.시행일자.toString();
               const year = str.slice(0, 4);
               const month = str.slice(4, 6);
