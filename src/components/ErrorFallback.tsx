@@ -46,9 +46,11 @@ const ErrorFallback = ({ error, resetErrorBoundary }: ErrorFallbackProps) => {
       // eslint-disable-next-line no-unsafe-optional-chaining
       const m = error.response?.data.message ?? ([] as string[]);
       const mArr = m
-        .map((x) =>
-          x in ERROR_MAP ? ERROR_MAP[x as keyof typeof ERROR_MAP] : [],
-        )
+        .map((x) => {
+          if (x in ERROR_MAP) return ERROR_MAP[x as keyof typeof ERROR_MAP];
+          if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(x)) return x;
+          return [];
+        })
         .flat();
       if (mArr.length > 0) return mArr;
     }
