@@ -11,6 +11,7 @@ import { Avatar, Box, IconButton, Tab, Tabs, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
+import useGetStoredLaws from "@/api/getStoredLaws";
 import { PROFILE_TAB_INFOS } from "@/interface/profile";
 import { SearchTabType } from "@/interface/search";
 
@@ -172,12 +173,101 @@ const ContentWrapper = styled.main`
 
     .list-area {
       flex: 1;
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      padding-top: 15px;
+      gap: 15px;
+
+      .no-data {
+        background: #fdf3de;
+        border-radius: 33px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 90%;
+        align-self: center;
+        color: var(--black-2, #3a3a3a) !important;
+        text-align: center !important;
+        font-family: SUIT !important;
+        font-size: 14px !important;
+        font-style: normal !important;
+        font-weight: 700 !important;
+        line-height: normal !important;
+      }
+
+      .list-item {
+        background: #fdf3de;
+        border-radius: 33px;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        color: var(--black-2, #3a3a3a) !important;
+        font-family: SUIT !important;
+        font-style: normal !important;
+        line-height: normal !important;
+        gap: 8px;
+
+        .title {
+          font-size: 15px !important;
+          font-weight: 700 !important;
+        }
+
+        .content {
+          font-size: 12px !important;
+          font-weight: 400 !important;
+        }
+
+        .keywords {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px;
+          .keyword {
+            color: var(--deep-orange, #ff7e20);
+            font-family: SUIT;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+          }
+        }
+      }
     }
   }
 `;
 
-const LawList = (): ReactElement => {
-  return <div>리스트 api 대기중</div>;
+const LawList = ({ type }: { type: SearchTabType }): ReactElement => {
+  const { data } = useGetStoredLaws({
+    type,
+    page: 1,
+    size: 5,
+  });
+
+  return (
+    <Box className="list-area">
+      {data?.length === 0 && (
+        <Box className="no-data">
+          {`${
+            PROFILE_TAB_INFOS.find((x) => x.value === type)?.label ??
+            "저장한 내용"
+          }${type === "prec" ? "가" : "이"} 없어요`}
+        </Box>
+      )}
+      {(data?.length ?? 0) > 0 &&
+        data?.map((d) => (
+          <Box className="list-item">
+            <Box className="title">{d.easyTitle}</Box>
+            <Box className="content">{d.summary}</Box>
+            <Box className="keywords">
+              {d.keywords?.map((k) => (
+                <Box className="keyword" key={k}>{`#${k}`}</Box>
+              ))}
+            </Box>
+          </Box>
+        ))}
+    </Box>
+  );
 };
 
 const MyProfile = (): ReactElement => {
@@ -254,7 +344,7 @@ const MyProfile = (): ReactElement => {
               />
             }
           >
-            <LawList />
+            <LawList type={selectedTab} />
           </Suspense>
         </Box>
       </Box>

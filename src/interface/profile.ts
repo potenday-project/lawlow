@@ -13,3 +13,9 @@ export const PROFILE_TAB_INFOS: {
     value: "statute",
   },
 ];
+
+export interface StoredSearchRequest {
+  type: SearchTabType;
+  page: number;
+  size: number;
+}
