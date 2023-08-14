@@ -28,6 +28,9 @@ export const DETAIL_TAB_INFOS: {
   ],
 };
 
+const ACTION_TYPES = ["add", "delete"] as const;
+export type ActionType = (typeof ACTION_TYPES)[number];
+
 export interface LawDetailRequest {
   type: SearchTabType;
   id: string | number;
@@ -38,6 +41,12 @@ export interface AiDetailRequest {
   type?: SearchTabType;
   recentSummaryMsg?: string;
   enabled?: boolean;
+}
+
+export interface StoreDetailRequest {
+  type: SearchTabType;
+  actionType: ActionType;
+  content: AiResponseData | undefined;
 }
 
 export interface AiResponseData {

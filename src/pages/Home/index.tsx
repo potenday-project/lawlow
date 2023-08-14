@@ -1,11 +1,4 @@
-import {
-  ChangeEvent,
-  ReactElement,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEvent, ReactElement, useEffect, useRef, useState } from "react";
 
 import { observer } from "mobx-react-lite";
 
@@ -141,22 +134,27 @@ const Home = (): ReactElement => {
   const { mainStore } = useStore();
   const navigate = useNavigate();
   const [value, setValue] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleTextFieldChange = useCallback(
-    (e: ChangeEvent<HTMLTextAreaElement>) => {
-      setValue(e.target.value);
-    },
-    [],
-  );
+  const handleTextFieldChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    if (isError) {
+      setIsError(false);
+      setErrorMsg("");
+    }
+    setValue(e.target.value);
+  };
 
-  const handleClickSearchButton = useCallback(
-    (v: string) => {
+  const handleClickSearchButton = (v: string) => {
+    if (value.length === 0 || value === "") {
+      setErrorMsg("검색어는 빈칸 일 수 없어요.");
+      setIsError(true);
+    } else {
       mainStore.resetSearchWords();
       mainStore.addSearchWord(v);
       navigate("/search");
-    },
-    [navigate],
-  );
+    }
+  };
 
   useEffect(() => {
     const wheelHandler = (e: WheelEvent) => {
@@ -231,6 +229,8 @@ const Home = (): ReactElement => {
         <Box className="bottom-area">
           <Box className="search-area">
             <SearchBarWithButton
+              isError={isError}
+              errorMsg={errorMsg}
               value={value}
               onChange={handleTextFieldChange}
               placeholder="키워드 또는 사건번호 입력"

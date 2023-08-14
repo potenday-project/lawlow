@@ -12,6 +12,8 @@ const StyledDiv = styled.div`
   gap: 10px;
 
   .MuiIconButton-root {
+    width: 40px;
+    height: 40px;
     background-color: rgba(255, 188, 16, 1);
     color: #ffffff;
     box-shadow: 2px 2px 4px 0px rgba(255, 126, 32, 0.25);
@@ -50,6 +52,8 @@ interface Props {
   placeholder?: string;
   onClick: (inputValue: string) => void;
   hasClear?: boolean;
+  isError?: boolean;
+  errorMsg?: string;
 }
 
 const SearchBarWithButton = ({
@@ -59,10 +63,14 @@ const SearchBarWithButton = ({
   placeholder = "",
   onClick,
   hasClear = false,
+  isError = false,
+  errorMsg = "",
 }: Props): ReactElement => {
   return (
     <StyledDiv>
       <TextField
+        error={isError}
+        helperText={errorMsg}
         fullWidth
         size="small"
         value={value}

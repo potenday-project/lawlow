@@ -10,10 +10,12 @@ import { Box, Button } from "@mui/material";
 import styled from "styled-components";
 
 import useGetAiDetail from "@/api/getAiDetail";
+import usePutStoredLaws from "@/api/putStoredLaws";
 import MoreEasyIcon from "@/assets/svg/MoreEasyIcon";
+import SavedIcon from "@/assets/svg/SavedIcon";
 import SaveIcon from "@/assets/svg/SaveIcon";
 import { SearchTabType } from "@/interface/search";
-import { DetailTabType } from "@/interface/searchDetail";
+import { AiResponseData, DetailTabType } from "@/interface/searchDetail";
 import Fallback from "@/pages/components/Fallback";
 
 const StyledTabPanel = styled.div`
@@ -113,6 +115,17 @@ const StyledTabPanel = styled.div`
       font-weight: 600;
       line-height: normal;
     }
+    .saved-button {
+      padding: 12px 25px;
+      border-radius: 14px;
+      background: var(--orange, #ff7e20);
+      color: var(--white-1, #fff);
+      font-family: SUIT;
+      font-size: 19px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
   }
 `;
 
@@ -155,14 +168,40 @@ const AiTabPanel = ({
   value: DetailTabType<typeof selectedSearchTab>;
   id: string | number;
 }): ReactElement => {
-  const [enabled, setEnabled] = useState(false);
   const { data } = useGetAiDetail({
     type: selectedSearchTab,
     id,
   });
 
+  const [enabled, setEnabled] = useState(false);
+  const [saved, setSaved] = useState(() => {
+    const curArr: AiResponseData[] = JSON.parse(
+      localStorage.getItem(`stored-${selectedSearchTab}`) ??
+        JSON.stringify([] as AiResponseData[]),
+    );
+    const target = curArr.find((x) => x.easyTitle === data?.easyTitle);
+    return target !== undefined;
+  });
+
+  const { mutate } = usePutStoredLaws();
+
   const handleClickMoreEasy = useCallback(() => {
     setEnabled(true);
+  }, []);
+
+  const handleClickSave = useCallback(() => {
+    mutate(
+      {
+        type: selectedSearchTab,
+        actionType: "add",
+        content: data,
+      },
+      {
+        onSuccess: () => {
+          setSaved(true);
+        },
+      },
+    );
   }, []);
 
   useEffect(() => {
@@ -206,9 +245,25 @@ const AiTabPanel = ({
         >
           더 쉽게 해석
         </Button>
-        <Button startIcon={<SaveIcon />} className="save-button">
-          판례 저장
-        </Button>
+        {!saved && (
+          <Button
+            startIcon={<SaveIcon />}
+            className="save-button"
+            onClick={handleClickSave}
+          >
+            판례 저장
+          </Button>
+        )}
+        {saved && (
+          <Button
+            disabled
+            startIcon={<SavedIcon />}
+            className="saved-button"
+            onClick={handleClickSave}
+          >
+            저장된 판례
+          </Button>
+        )}
       </Box>
     </StyledTabPanel>
   );
