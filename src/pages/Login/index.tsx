@@ -10,6 +10,7 @@ import { Box, IconButton } from "@mui/material";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
+import usePostAuth from "@/api/postAuth";
 import MainPageLogo from "@/assets/svg/MainPageLogo";
 
 const ContentWrapper = styled.main`
@@ -74,6 +75,8 @@ const Login = (): ReactElement => {
       localStorage.getItem("credential") !== "",
   );
 
+  const { mutate } = usePostAuth();
+
   const navigate = useNavigate();
 
   const handleClickGoBack = useCallback(() => {
@@ -92,9 +95,19 @@ const Login = (): ReactElement => {
       localStorage.setItem("picture", res.picture ?? "");
       localStorage.setItem("credential", res.credential ?? "");
 
-      window.dispatchEvent(new Event("storage"));
-
-      navigate(-1);
+      mutate(
+        {
+          login_type: "google",
+          token: res.credential ?? "",
+        },
+        {
+          onSuccess: (response) => {
+            localStorage.setItem("accessToken", response.accessToken ?? "");
+            window.dispatchEvent(new Event("storage"));
+            navigate(-1);
+          },
+        },
+      );
     },
     [],
   );
