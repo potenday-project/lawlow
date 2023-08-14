@@ -33,10 +33,12 @@ const StyledSection = styled.section`
     gap: 4px;
 
     .item-container {
+      width: 100%;
       display: flex;
       flex-direction: column;
 
       .title-container {
+        width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -55,6 +57,7 @@ const StyledSection = styled.section`
       }
 
       .content {
+        width: 100%;
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;

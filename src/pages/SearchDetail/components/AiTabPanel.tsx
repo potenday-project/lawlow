@@ -46,6 +46,7 @@ const StyledTabPanel = styled.div`
   }
 
   .content {
+    width: 100%;
     color: var(--black, #1b1b1b);
     font-family: SUIT;
     font-size: 17px;

@@ -8,13 +8,6 @@ import styled from "styled-components";
 import GoogleIcon from "@/assets/svg/GoogleIcon";
 
 const ContentWrapper = styled.main`
-  position: absolute;
-  top: 56px;
-  width: 100%;
-  height: calc(100% - 56px);
-  display: flex;
-  flex-direction: column;
-
   .title-area {
     display: inline-flex;
     align-items: center;
@@ -24,10 +17,12 @@ const ContentWrapper = styled.main`
     font-style: normal;
     font-weight: 600;
     line-height: 15px;
+    padding: 0px 20px;
 
-    .MuiIconButton-root {
-      position: absolute;
-      left: 20px;
+    p {
+      width: 100%;
+      text-align: center;
+      padding-right: 40px;
     }
   }
 
@@ -51,6 +46,7 @@ const ContentWrapper = styled.main`
       }
 
       .content {
+        width: 100%;
         display: flex;
         flex-direction: row;
         border-radius: 20px;
@@ -108,7 +104,7 @@ const MyProfileSetting = (): ReactElement => {
     navigate("/");
   }, [navigate]);
   return (
-    <ContentWrapper>
+    <ContentWrapper className="under-appbar-content">
       <Box className="title-area">
         <IconButton onClick={handleClickGoBack}>
           <ArrowBack />

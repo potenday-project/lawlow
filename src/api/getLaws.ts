@@ -21,6 +21,14 @@ const getLaws = async ({
 
   const newList = response?.list.map((l) => ({ ...l, type }));
 
+  //   return new Promise((res) => {
+  //     setTimeout(() => {
+  //       res({ ...response, list: newList } as Page<
+  //         GetLawsResponseType<typeof type>
+  //       >);
+  //     }, 100000000);
+  //   });
+
   return { ...response, list: newList } as Page<
     GetLawsResponseType<typeof type>
   >;
