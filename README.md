@@ -1,46 +1,14 @@
-# Getting Started with Create React App
+[로우로우 바로가기](lawlow.vercel.app)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+안녕하세요! 로우로우라는 서비스를 만들고 있는 308TEN013팀입니다. <br />
+저희는 디자인_배수은, 개발(FE)_장서연, 개발(BE)_이건희 으로 구성되어 있습니다. <br />
+<br />
+저희가 이번 프로젝트에서 진행하고 있는 서비스는 '로우로우'입니다. <br />
+지난 10년간 고소고발 건수가 4배가 늘어나는 등 과거와 비교해 법적 분쟁이 일상에 빈번해졌습니다. <br />
+그리고 늘어나는 법적 분쟁에 따라, 그에 따른 리걸 서비스들이 폭발적인 성장을 하고 있습니다. <br />
+하지만 각종 법률 전문 용어들의 어려움으로 인해 일반인들이 자신의 법적 분쟁에 대한 자세한 판례와 법령에 접근하기에는 한계가 있습니다. <br />
+이에, 저희 서비스 '로우로우'는 사용자에게 쉽게 판례를 읽는 서비스를 제시합니다. <br />
+로우로우에서는 필요한 판례를 키워드로 검색하고, chat-GPT를 활용해 판례를 읽기 쉬운 말로 번역해줍니다. <br />
+일반적인 수준의 문해력만 있으면, 누구나 쉽게 접근할 수 있는 법률 아카이빙 서비스를 제시하고자 합니다. <br />
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+혹시 법적 분쟁을 겪고 계신 분이 있다면, 저희 서비스를 기대해주세요!
