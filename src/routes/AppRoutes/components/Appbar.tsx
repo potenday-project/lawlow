@@ -1,37 +1,36 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import {
-  AppBar as MuiAppBar,
+  // AppBar as MuiAppBar,
   Button,
   styled,
   Avatar,
-  Toolbar,
+  // Toolbar,
   Box,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router";
 
 import MainLogo from "@/assets/svg/MainLogo";
 
-const StyledAppBar = styled(MuiAppBar)<{ location: string }>(
-  ({ location }) => ({
-    background: location === "/" ? "transparent" : "#fff",
-    boxShadow: "none",
+const StyledAppBar = styled(Box)<{ location: string }>(({ location }) => ({
+  height: "54px",
+  padding: "10px 20px",
+  background: "#fff",
+  boxShadow: "none",
+  alignItems: "center",
 
-    " .MuiToolbar-root": {
-      display: "inline-flex",
-      justifyContent: location === "/" ? "flex-end" : "space-between",
-    },
+  display: "inline-flex",
+  justifyContent: location === "/" ? "flex-end" : "space-between",
 
-    " .login": {
-      display:
-        location === "/login" ||
-        location === "/my-profile" ||
-        location === "/my-profile-setting"
-          ? "none"
-          : "flex",
-    },
-  }),
-);
+  " .login": {
+    display:
+      location === "/login" ||
+      location === "/my-profile" ||
+      location === "/my-profile-setting"
+        ? "none"
+        : "flex",
+  },
+}));
 
 const StyledButton = styled(Button)({
   padding: "8px 12px",
@@ -85,26 +84,26 @@ const AppBar = () => {
 
   return (
     <StyledAppBar location={location.pathname}>
-      <Toolbar>
-        {location.pathname !== "/" && (
-          <Box onClick={handleClickLogo}>
-            <MainLogo />
-          </Box>
-        )}
-        {!isLogin && (
-          <StyledButton className="login" onClick={handleClickLogin}>
-            로그인
-          </StyledButton>
-        )}
-        {isLogin && (
-          <Avatar
-            className="login"
-            onClick={handleClickProfile}
-            alt="profile"
-            src={localStorage.getItem("picture") ?? ""}
-          />
-        )}
-      </Toolbar>
+      {/* <Toolbar> */}
+      {location.pathname !== "/" && (
+        <Box onClick={handleClickLogo}>
+          <MainLogo />
+        </Box>
+      )}
+      {!isLogin && (
+        <StyledButton className="login" onClick={handleClickLogin}>
+          로그인
+        </StyledButton>
+      )}
+      {isLogin && (
+        <Avatar
+          className="login"
+          onClick={handleClickProfile}
+          alt="profile"
+          src={localStorage.getItem("picture") ?? ""}
+        />
+      )}
+      {/* </Toolbar> */}
     </StyledAppBar>
   );
 };

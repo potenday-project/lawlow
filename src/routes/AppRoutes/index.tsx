@@ -11,11 +11,14 @@ const AppContainer = styled.div`
   max-width: 390px;
   min-width: 390px;
   display: flex;
+  flex-direction: column;
+  border-radius: 49px;
+  overflow: hidden;
 
   box-shadow:
-    rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
-    rgba(0, 0, 0, 0.14) 0px 3px 4px 0px,
-    rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+    rgba(0, 0, 0, 0.2) 0px 5px 6px -3px,
+    rgba(0, 0, 0, 0.14) 0px 5px 8px 0px,
+    rgba(0, 0, 0, 0.12) 0px 3px 14px 0px;
 `;
 
 const ContentContainer = styled.div`

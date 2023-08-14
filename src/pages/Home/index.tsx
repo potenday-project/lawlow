@@ -20,7 +20,7 @@ import { useStore } from "@stores/index";
 import SearchBarWithButton from "../components/SearchBarWithButton";
 
 const Wrapper = styled.div`
-  height: 100vh;
+  height: calc(844px - 64px);
   background: rgba(255, 126, 32, 1);
   overflow-y: auto;
   &::-webkit-scrollbar {
@@ -29,7 +29,7 @@ const Wrapper = styled.div`
 
   section {
     width: 390px;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
