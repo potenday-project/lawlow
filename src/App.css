@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  margin: 0px !important;
+  font-family: SUIT, Pretendard, sans-serif !important;
+  overflow-x: hidden !important;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(255, 188, 16, 1) !important;
+}
+
+@media screen and (min-width: 391px) {
+  header {
+    width: 389px !important;
+    left: 31.1% !important;
+  }
+}
+
+.under-appbar-content {
+  background: #fff;
+  width: 390px;
+  padding-top: 64px;
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

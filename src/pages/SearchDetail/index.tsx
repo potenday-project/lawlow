@@ -20,13 +20,6 @@ import Fallback from "../components/Fallback";
 import Footer from "../components/Footer";
 
 const ContentWrapper = styled.main`
-  position: absolute;
-  top: 56px;
-  width: 100%;
-  height: calc(100% - 56px);
-  display: flex;
-  flex-direction: column;
-
   .original-area {
     flex: 1;
     display: flex;
@@ -148,7 +141,7 @@ const SearchDetail = (): ReactElement => {
   }, []);
 
   return (
-    <ContentWrapper>
+    <ContentWrapper className="under-appbar-content">
       <Box className="original-area">
         <Box className="title-area">
           <IconButton onClick={handleClickGoBack}>

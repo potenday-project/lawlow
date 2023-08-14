@@ -23,13 +23,6 @@ import Footer from "../components/Footer";
 import SearchBarWithButton from "../components/SearchBarWithButton";
 
 const ContentWrapper = styled.main`
-  position: absolute;
-  top: 56px;
-  width: 100%;
-  height: calc(100% - 56px);
-  display: flex;
-  flex-direction: column;
-
   .search-area {
     padding: 0.5rem 1rem;
     display: inline-flex;
@@ -81,6 +74,7 @@ const ContentWrapper = styled.main`
   }
 
   .total-area {
+    width: 100%;
     display: inline-flex;
     padding: 18px 15px 6px 15px;
     align-items: flex-start;
@@ -184,7 +178,7 @@ const Search = (): ReactElement => {
   );
 
   return (
-    <ContentWrapper>
+    <ContentWrapper className="under-appbar-content">
       <section className="search-area">
         <IconButton className="goback-button" onClick={handleClickGoBack}>
           <ArrowBack />
