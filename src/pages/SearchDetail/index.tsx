@@ -26,7 +26,6 @@ const ContentWrapper = styled.main`
     flex-direction: column;
 
     .title-area {
-      height: 64px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -35,21 +34,12 @@ const ContentWrapper = styled.main`
       font-style: normal;
       font-weight: 600;
       line-height: 15px;
+      padding: 0px 20px;
 
       p {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        margin: 0;
-        width: 60%;
-        height: 100%;
-        display: inline-flex;
-        align-items: center;
-      }
-
-      .MuiIconButton-root {
-        position: absolute;
-        left: 20px;
+        width: 100%;
+        text-align: center;
+        padding-right: 40px;
       }
     }
 

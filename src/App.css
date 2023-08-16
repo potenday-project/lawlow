@@ -44,6 +44,8 @@ body {
   display: flex;
   justify-content: center;
   background-color: rgba(255, 188, 16, 1) !important;
+  align-items: center;
+  height: 100vh;
 }
 
 @media screen and (min-width: 391px) {
@@ -56,12 +58,11 @@ body {
 .under-appbar-content {
   background: #fff;
   width: 390px;
-  padding-top: 64px;
+  height: calc(844px - 54px);
   display: flex;
   flex-direction: column;
   display: flex;
   flex-direction: column;
-  height: 100vh;
   overflow: auto;
   &::-webkit-scrollbar {
     display: none;
