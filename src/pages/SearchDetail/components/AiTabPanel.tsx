@@ -151,11 +151,11 @@ const Content = ({
 
   useEffect(() => {
     if (data) {
-      setText(data.summary);
+      setText(data.summary.replaceAll("/n", "<br/>"));
     }
   }, [data]);
 
-  return <Box className="content">{text}</Box>;
+  return <Box className="content" dangerouslySetInnerHTML={{ __html: text }} />;
 };
 
 const AiTabPanel = ({
