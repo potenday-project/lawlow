@@ -5,8 +5,8 @@ export interface LawLowResponse<T = unknown> {
   success: boolean;
   data?: T;
   statusCode?: number;
-  message?: string[];
-  detail?: string[];
+  errorMessage?: string[];
+  errorDetail?: string[];
 }
 
 class Http {
