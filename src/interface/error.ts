@@ -6,7 +6,7 @@ import { LawLowResponse } from "@/api/_http";
 
 export interface CommonErrorProps {
   statusCode: Pick<LawLowResponse, "statusCode">["statusCode"];
-  message: Pick<LawLowResponse, "message">["message"];
+  errorMessage: Pick<LawLowResponse, "errorMessage">["errorMessage"];
   onReset?: () => void;
 }
 

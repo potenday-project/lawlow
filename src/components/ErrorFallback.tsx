@@ -7,8 +7,10 @@ import styled from "styled-components";
 import { ErrorFallbackProps } from "@/interface/error";
 
 const ContentWrapper = styled.main`
-  width: 100vw;
-  height: 100vh;
+  background: #fff;
+  width: 390px;
+  height: 844px;
+  border-radius: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,7 +25,7 @@ const ContentWrapper = styled.main`
 
   .MuiButton-root {
     height: 40px;
-    width: 60vw;
+    width: 60%;
     border-radius: 15.867px;
     background: var(--orange, #ffbc10);
     color: var(--black-2, #3a3a3a);
@@ -38,13 +40,14 @@ const ContentWrapper = styled.main`
 
 const ERROR_MAP: { [key: string]: string } = {
   "q should not be empty": "검색어는 비어 있으면 안돼요.😢",
+  "ThrottlerException: Too Many Requests": "너무 많은 요청이 들어왔어요.😢",
 };
 
 const ErrorFallback = ({ error, resetErrorBoundary }: ErrorFallbackProps) => {
   const [msg] = useState(() => {
     if (error.name === "AxiosError") {
       // eslint-disable-next-line no-unsafe-optional-chaining
-      const m = error.response?.data.message ?? ([] as string[]);
+      const m = error.response?.data.errorMessage ?? ([] as string[]);
       const mArr = m
         .map((x) => {
           if (x in ERROR_MAP) return ERROR_MAP[x as keyof typeof ERROR_MAP];
