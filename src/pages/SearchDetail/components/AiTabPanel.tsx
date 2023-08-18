@@ -10,7 +10,7 @@ import { Box, Button } from "@mui/material";
 import styled from "styled-components";
 
 import useGetAiDetail from "@/api/getAiDetail";
-import usePutStoredLaws from "@/api/putStoredLaws";
+import useStoreLaws from "@/api/putStoredLaws";
 import MoreEasyIcon from "@/assets/svg/MoreEasyIcon";
 import SavedIcon from "@/assets/svg/SavedIcon";
 import SaveIcon from "@/assets/svg/SaveIcon";
@@ -143,7 +143,7 @@ const Content = ({
   enabled: boolean;
   setEnabledFalse: () => void;
 }): ReactElement => {
-  const [text, setText] = useState(content);
+  const [text, setText] = useState(content.replaceAll("/n", "<br/>"));
   const { data } = useGetAiDetail({
     id,
     type,
@@ -189,7 +189,7 @@ const AiTabPanel = ({
     return target !== undefined;
   });
 
-  const { mutate } = usePutStoredLaws();
+  const { mutate } = useStoreLaws();
 
   const handleClickMoreEasy = useCallback(() => {
     setEnabled(true);
@@ -199,8 +199,7 @@ const AiTabPanel = ({
     mutate(
       {
         type: selectedSearchTab,
-        actionType: "add",
-        content: data,
+        id,
       },
       {
         onSuccess: () => {
