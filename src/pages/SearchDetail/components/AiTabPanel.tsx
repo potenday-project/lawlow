@@ -135,11 +135,13 @@ const Content = ({
   type,
   content,
   enabled,
+  setEnabledFalse,
 }: {
   id: number | string;
   type: SearchTabType;
   content: string;
   enabled: boolean;
+  setEnabledFalse: () => void;
 }): ReactElement => {
   const [text, setText] = useState(content);
   const { data } = useGetAiDetail({
@@ -147,6 +149,7 @@ const Content = ({
     type,
     recentSummaryMsg: content,
     enabled,
+    setEnabledFalse,
   });
 
   useEffect(() => {
@@ -175,6 +178,8 @@ const AiTabPanel = ({
   });
 
   const [enabled, setEnabled] = useState(false);
+  const setEnabledFalse = useCallback(() => setEnabled(false), []);
+
   const [saved, setSaved] = useState(() => {
     const curArr: AiResponseData[] = JSON.parse(
       localStorage.getItem(`stored-${selectedSearchTab}`) ??
@@ -228,6 +233,7 @@ const AiTabPanel = ({
           type={selectedSearchTab}
           content={data?.summary ?? ""}
           enabled={enabled}
+          setEnabledFalse={setEnabledFalse}
         />
       </Suspense>
       <Box className="keyword-container">

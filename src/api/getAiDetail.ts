@@ -18,16 +18,27 @@ const getAiDetail = async ({
   return response as AiResponseData;
 };
 
+interface Props extends AiDetailRequest {
+  setEnabledFalse?: () => void;
+}
+
 const useGetAiDetail = ({
   type,
   id,
   recentSummaryMsg = undefined,
   enabled = true,
-}: AiDetailRequest): UseQueryResult<AiResponseData> => {
+  setEnabledFalse = () => undefined,
+}: Props): UseQueryResult<AiResponseData> => {
   return useQuery(
     [API_KEY.AI_DETAIL, { type, id, recentSummaryMsg }],
     () => getAiDetail({ type, id, recentSummaryMsg }),
-    { suspense: true, enabled },
+    {
+      suspense: true,
+      enabled,
+      onSuccess: () => {
+        setEnabledFalse();
+      },
+    },
   );
 };
 
