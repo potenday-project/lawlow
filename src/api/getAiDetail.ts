@@ -12,7 +12,7 @@ const getAiDetail = async ({
 }: AiDetailRequest): Promise<AiResponseData> => {
   const url = `/laws/${type}/${id}/summary`;
   const response: AiResponseData | undefined = await http.post(url, {
-    data: recentSummaryMsg,
+    recentSummaryMsg,
   });
 
   return response as AiResponseData;
