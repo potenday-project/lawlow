@@ -15,6 +15,7 @@ class Http {
   constructor() {
     this.axios = Axios.create({
       baseURL: `${process.env.REACT_APP_SERVER_URL}`,
+      withCredentials: true, // cookie
     });
   }
 
