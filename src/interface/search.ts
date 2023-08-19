@@ -106,3 +106,7 @@ interface LawDetailData {
 export type GetLawsResponseType<T extends SearchTabType> = T extends "prec"
   ? PrecDetailData
   : LawDetailData;
+
+export type GetLawDetailResponseType<T extends SearchTabType> = T extends "prec"
+  ? { type: "prec"; isBookmarked: boolean; lawInfo: PrecDetailData }
+  : { type: "statute"; isBookmarked: boolean; lawInfo: LawDetailData };
