@@ -17,7 +17,7 @@ import styled from "styled-components";
 import { useStore } from "@/stores";
 import { SEARCH_TAB_INFOS, SearchTabType } from "@interface/search";
 
-import LawList from "./components/LawList";
+import SearchLawList from "./components/SearchLawList";
 import Fallback from "../components/Fallback";
 import Footer from "../components/Footer";
 import SearchBarWithButton from "../components/SearchBarWithButton";
@@ -208,7 +208,7 @@ const Search = (): ReactElement => {
       </section>
       <section className="list-area">
         <Suspense fallback={<Fallback text="검색 중" />}>
-          <LawList
+          <SearchLawList
             q={mainStore.searchWords[mainStore.searchWords.length - 1]}
           />
         </Suspense>
