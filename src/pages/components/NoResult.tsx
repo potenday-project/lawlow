@@ -25,13 +25,19 @@ const StyledSection = styled.section`
   }
 `;
 
-const NoResult = (): ReactElement => {
+const NoResult = ({
+  text1 = "검색 결과가 업습니다",
+  text2 = "새로운 검색어를 입력해 주세요",
+}: {
+  text1?: string;
+  text2?: string;
+}): ReactElement => {
   return (
     <StyledSection>
       <NoResultIcon />
       <Box className="text-container">
-        <Typography>검색 결과가 없습니다</Typography>
-        <Typography>새로운 검색어를 입력해 주세요</Typography>
+        <Typography>{text1}</Typography>
+        <Typography>{text2}</Typography>
       </Box>
     </StyledSection>
   );
