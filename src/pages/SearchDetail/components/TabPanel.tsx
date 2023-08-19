@@ -67,9 +67,9 @@ const TabPanel = ({
   useEffect(() => {
     if (data) {
       if (data.type === "prec") {
-        setTitle(`${data.사건번호} 판결`);
+        setTitle(`${data.lawInfo.사건번호} 판결`);
       } else {
-        setTitle(data.기본정보.법령명);
+        setTitle(data.lawInfo.기본정보.법령명);
       }
     }
   }, [data]);
@@ -90,12 +90,12 @@ const TabPanel = ({
         <>
           <Box className="title-container">
             <Box id="law-title" className="title">
-              {data.사건명}
+              {data.lawInfo.사건명}
             </Box>
           </Box>
           <Box
             className="content"
-            dangerouslySetInnerHTML={{ __html: data.판례내용 }}
+            dangerouslySetInnerHTML={{ __html: data.lawInfo.판례내용 }}
           />
         </>
       )}
@@ -103,7 +103,7 @@ const TabPanel = ({
         <>
           <Box className="title-container">
             <Box id="law-title" className="title">{`현행 법령[시행 ${(() => {
-              const str = data.기본정보.시행일자.toString();
+              const str = data.lawInfo.기본정보.시행일자.toString();
               const year = str.slice(0, 4);
               const month = str.slice(4, 6);
               const day = str.slice(6, 8);
@@ -115,7 +115,7 @@ const TabPanel = ({
           <Box
             className="content"
             dangerouslySetInnerHTML={{
-              __html: data.부칙.부칙단위
+              __html: data.lawInfo.부칙.부칙단위
                 .map((b) => b.부칙내용.join("<br/>").replaceAll("\n", "<br/>"))
                 .join("<br/>"),
             }}
