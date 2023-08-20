@@ -12,7 +12,7 @@ const getLawDetail = async ({
 }: LawDetailRequest): Promise<GetLawDetailResponseType<typeof type>> => {
   const url = `/laws/${type}/${id}`;
   const response: GetLawDetailResponseType<typeof type> | undefined =
-    await http.get(url);
+    await http.authGet(url);
 
   const newResponse = { ...response, type };
 
