@@ -91,6 +91,22 @@ class Http {
       })
       .then((res) => res.data.data);
   }
+
+  async delete<Request = any, Response = unknown>(
+    url: string,
+    data?: Request,
+    conf: AxiosRequestConfig = {},
+  ) {
+    return this.axios
+      .delete<LawLowResponse<Response>>(url, {
+        ...conf,
+        headers: {
+          ...conf.headers,
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((res) => res.data.data);
+  }
 }
 
 export const http = new Http();

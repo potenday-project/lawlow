@@ -11,6 +11,7 @@ import { observer } from "mobx-react-lite";
 import { Box, Button } from "@mui/material";
 import styled from "styled-components";
 
+import useDeleteStoredLaw from "@/api/deleteStoredLaw";
 import useGetAiDetail from "@/api/getAiDetail";
 import useStoreLaws from "@/api/putStoredLaws";
 import MoreEasyIcon from "@/assets/svg/MoreEasyIcon";
@@ -187,6 +188,7 @@ const AiTabPanel = ({
   const [saved, setSaved] = useState(mainStore.isSaved);
 
   const { mutate } = useStoreLaws();
+  const { mutate: deleteMutate } = useDeleteStoredLaw();
 
   const handleClickMoreEasy = useCallback(() => {
     setEnabled(true);
@@ -202,6 +204,21 @@ const AiTabPanel = ({
         onSuccess: () => {
           setSaved(true);
           mainStore.setIsSaved(true);
+        },
+      },
+    );
+  }, []);
+
+  const handleClickDelete = useCallback(() => {
+    deleteMutate(
+      {
+        type: selectedSearchTab,
+        id,
+      },
+      {
+        onSuccess: () => {
+          setSaved(false);
+          mainStore.setIsSaved(false);
         },
       },
     );
@@ -260,10 +277,9 @@ const AiTabPanel = ({
         )}
         {saved && (
           <Button
-            disabled
             startIcon={<SavedIcon />}
             className="saved-button"
-            onClick={handleClickSave}
+            onClick={handleClickDelete}
           >
             저장된 판례
           </Button>
