@@ -6,6 +6,8 @@ import {
   useState,
 } from "react";
 
+import { observer } from "mobx-react-lite";
+
 import { Box, Button } from "@mui/material";
 import styled from "styled-components";
 
@@ -15,8 +17,9 @@ import MoreEasyIcon from "@/assets/svg/MoreEasyIcon";
 import SavedIcon from "@/assets/svg/SavedIcon";
 import SaveIcon from "@/assets/svg/SaveIcon";
 import { SearchTabType } from "@/interface/search";
-import { AiResponseData, DetailTabType } from "@/interface/searchDetail";
+import { DetailTabType } from "@/interface/searchDetail";
 import Fallback from "@/pages/components/Fallback";
+import { useStore } from "@/stores";
 
 const StyledTabPanel = styled.div`
   flex: 1;
@@ -172,6 +175,7 @@ const AiTabPanel = ({
   value: DetailTabType<typeof selectedSearchTab>;
   id: string | number;
 }): ReactElement => {
+  const { mainStore } = useStore();
   const { data } = useGetAiDetail({
     type: selectedSearchTab,
     id,
@@ -180,14 +184,7 @@ const AiTabPanel = ({
   const [enabled, setEnabled] = useState(false);
   const setEnabledFalse = useCallback(() => setEnabled(false), []);
 
-  const [saved, setSaved] = useState(() => {
-    const curArr: AiResponseData[] = JSON.parse(
-      localStorage.getItem(`stored-${selectedSearchTab}`) ??
-        JSON.stringify([] as AiResponseData[]),
-    );
-    const target = curArr.find((x) => x.easyTitle === data?.easyTitle);
-    return target !== undefined;
-  });
+  const [saved, setSaved] = useState(mainStore.isSaved);
 
   const { mutate } = useStoreLaws();
 
@@ -204,6 +201,7 @@ const AiTabPanel = ({
       {
         onSuccess: () => {
           setSaved(true);
+          mainStore.setIsSaved(true);
         },
       },
     );
@@ -275,4 +273,4 @@ const AiTabPanel = ({
   );
 };
 
-export default AiTabPanel;
+export default observer(AiTabPanel);

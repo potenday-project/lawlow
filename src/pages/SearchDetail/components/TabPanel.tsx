@@ -1,11 +1,14 @@
 import { ReactElement, useEffect } from "react";
 
+import { observer } from "mobx-react-lite";
+
 import { Box } from "@mui/material";
 import styled from "styled-components";
 
 import useGetLawDetail from "@/api/getLawDetail";
 import { SearchTabType } from "@/interface/search";
 import { DetailTabType } from "@/interface/searchDetail";
+import { useStore } from "@/stores";
 
 const StyledTabPanel = styled.div`
   flex: 1;
@@ -59,6 +62,7 @@ const TabPanel = ({
   id: number | string;
   setTitle: (title: string) => void;
 }): ReactElement => {
+  const { mainStore } = useStore();
   const { data } = useGetLawDetail({
     type: selectedSearchTab,
     id,
@@ -71,6 +75,8 @@ const TabPanel = ({
       } else {
         setTitle(data.lawInfo.기본정보.법령명);
       }
+
+      mainStore.setIsSaved(data.isBookmarked);
     }
   }, [data]);
 
@@ -126,4 +132,4 @@ const TabPanel = ({
   );
 };
 
-export default TabPanel;
+export default observer(TabPanel);
