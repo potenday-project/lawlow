@@ -11,10 +11,10 @@ import { Avatar, Box, IconButton, Tab, Tabs, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 
-import useGetStoredLaws from "@/api/getStoredLaws";
 import { PROFILE_TAB_INFOS } from "@/interface/profile";
 import { SearchTabType } from "@/interface/search";
 
+import ProfileLawList from "./components/ProfileLawList";
 import Fallback from "../components/Fallback";
 import Footer from "../components/Footer";
 
@@ -233,39 +233,6 @@ const ContentWrapper = styled.main`
   }
 `;
 
-const LawList = ({ type }: { type: SearchTabType }): ReactElement => {
-  const { data } = useGetStoredLaws({
-    type,
-    page: 1,
-    size: 5,
-  });
-
-  return (
-    <Box className="list-area">
-      {data?.length === 0 && (
-        <Box className="no-data">
-          {`${
-            PROFILE_TAB_INFOS.find((x) => x.value === type)?.label ??
-            "저장한 내용"
-          }${type === "prec" ? "가" : "이"} 없어요`}
-        </Box>
-      )}
-      {(data?.length ?? 0) > 0 &&
-        data?.map((d) => (
-          <Box className="list-item">
-            <Box className="title">{d.easyTitle}</Box>
-            <Box className="content">{d.summary}</Box>
-            <Box className="keywords">
-              {d.keywords?.map((k) => (
-                <Box className="keyword" key={k}>{`#${k}`}</Box>
-              ))}
-            </Box>
-          </Box>
-        ))}
-    </Box>
-  );
-};
-
 const MyProfile = (): ReactElement => {
   const navigate = useNavigate();
 
@@ -340,7 +307,7 @@ const MyProfile = (): ReactElement => {
               />
             }
           >
-            <LawList type={selectedTab} />
+            <ProfileLawList type={selectedTab} />
           </Suspense>
         </Box>
       </Box>

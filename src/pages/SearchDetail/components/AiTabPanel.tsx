@@ -6,17 +6,21 @@ import {
   useState,
 } from "react";
 
+import { observer } from "mobx-react-lite";
+
 import { Box, Button } from "@mui/material";
 import styled from "styled-components";
 
+import useDeleteStoredLaw from "@/api/deleteStoredLaw";
 import useGetAiDetail from "@/api/getAiDetail";
-import usePutStoredLaws from "@/api/putStoredLaws";
+import useStoreLaws from "@/api/putStoredLaws";
 import MoreEasyIcon from "@/assets/svg/MoreEasyIcon";
 import SavedIcon from "@/assets/svg/SavedIcon";
 import SaveIcon from "@/assets/svg/SaveIcon";
 import { SearchTabType } from "@/interface/search";
-import { AiResponseData, DetailTabType } from "@/interface/searchDetail";
+import { DetailTabType } from "@/interface/searchDetail";
 import Fallback from "@/pages/components/Fallback";
+import { useStore } from "@/stores";
 
 const StyledTabPanel = styled.div`
   flex: 1;
@@ -135,18 +139,21 @@ const Content = ({
   type,
   content,
   enabled,
+  setEnabledFalse,
 }: {
   id: number | string;
   type: SearchTabType;
   content: string;
   enabled: boolean;
+  setEnabledFalse: () => void;
 }): ReactElement => {
-  const [text, setText] = useState(content);
+  const [text, setText] = useState(content.replaceAll("/n", "<br/>"));
   const { data } = useGetAiDetail({
     id,
     type,
     recentSummaryMsg: content,
     enabled,
+    setEnabledFalse,
   });
 
   useEffect(() => {
@@ -169,22 +176,19 @@ const AiTabPanel = ({
   value: DetailTabType<typeof selectedSearchTab>;
   id: string | number;
 }): ReactElement => {
+  const { mainStore } = useStore();
   const { data } = useGetAiDetail({
     type: selectedSearchTab,
     id,
   });
 
   const [enabled, setEnabled] = useState(false);
-  const [saved, setSaved] = useState(() => {
-    const curArr: AiResponseData[] = JSON.parse(
-      localStorage.getItem(`stored-${selectedSearchTab}`) ??
-        JSON.stringify([] as AiResponseData[]),
-    );
-    const target = curArr.find((x) => x.easyTitle === data?.easyTitle);
-    return target !== undefined;
-  });
+  const setEnabledFalse = useCallback(() => setEnabled(false), []);
 
-  const { mutate } = usePutStoredLaws();
+  const [saved, setSaved] = useState(mainStore.isSaved);
+
+  const { mutate } = useStoreLaws();
+  const { mutate: deleteMutate } = useDeleteStoredLaw();
 
   const handleClickMoreEasy = useCallback(() => {
     setEnabled(true);
@@ -194,12 +198,27 @@ const AiTabPanel = ({
     mutate(
       {
         type: selectedSearchTab,
-        actionType: "add",
-        content: data,
+        id,
       },
       {
         onSuccess: () => {
           setSaved(true);
+          mainStore.setIsSaved(true);
+        },
+      },
+    );
+  }, []);
+
+  const handleClickDelete = useCallback(() => {
+    deleteMutate(
+      {
+        type: selectedSearchTab,
+        id,
+      },
+      {
+        onSuccess: () => {
+          setSaved(false);
+          mainStore.setIsSaved(false);
         },
       },
     );
@@ -228,6 +247,7 @@ const AiTabPanel = ({
           type={selectedSearchTab}
           content={data?.summary ?? ""}
           enabled={enabled}
+          setEnabledFalse={setEnabledFalse}
         />
       </Suspense>
       <Box className="keyword-container">
@@ -257,10 +277,9 @@ const AiTabPanel = ({
         )}
         {saved && (
           <Button
-            disabled
             startIcon={<SavedIcon />}
             className="saved-button"
-            onClick={handleClickSave}
+            onClick={handleClickDelete}
           >
             저장된 판례
           </Button>
@@ -270,4 +289,4 @@ const AiTabPanel = ({
   );
 };
 
-export default AiTabPanel;
+export default observer(AiTabPanel);

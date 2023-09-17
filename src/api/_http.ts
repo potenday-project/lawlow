@@ -15,12 +15,15 @@ class Http {
   constructor() {
     this.axios = Axios.create({
       baseURL: `${process.env.REACT_APP_SERVER_URL}`,
+      withCredentials: true, // cookie
     });
   }
 
   async get<Response = unknown>(url: string, conf: AxiosRequestConfig = {}) {
     return this.axios
-      .get<LawLowResponse<Response>>(url, { ...conf })
+      .get<LawLowResponse<Response>>(url, {
+        ...conf,
+      })
       .then((res) => res.data.data);
   }
 
@@ -33,7 +36,7 @@ class Http {
         ...conf,
         headers: {
           ...conf.headers,
-          "User-Id": localStorage.getItem("credential"),
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       })
       .then((res) => res.data.data);
@@ -47,6 +50,22 @@ class Http {
     return this.axios
       .post<LawLowResponse<Response>>(url, data, {
         ...conf,
+      })
+      .then((res) => res.data.data);
+  }
+
+  async authPost<Request = any, Response = unknown>(
+    url: string,
+    data?: Request,
+    conf: AxiosRequestConfig = {},
+  ) {
+    return this.axios
+      .post<LawLowResponse<Response>>(url, data, {
+        ...conf,
+        headers: {
+          ...conf.headers,
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
       })
       .then((res) => res.data.data);
   }
@@ -67,7 +86,23 @@ class Http {
         ...conf,
         headers: {
           ...conf.headers,
-          "User-Id": localStorage.getItem("credential"),
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((res) => res.data.data);
+  }
+
+  async delete<Request = any, Response = unknown>(
+    url: string,
+    data?: Request,
+    conf: AxiosRequestConfig = {},
+  ) {
+    return this.axios
+      .delete<LawLowResponse<Response>>(url, {
+        ...conf,
+        headers: {
+          ...conf.headers,
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       })
       .then((res) => res.data.data);

@@ -11,11 +11,14 @@ class MainStore {
 
   selectedPage: number;
 
+  isSaved: boolean;
+
   constructor() {
     this.searchWords = [];
     this.selectedTab = "prec";
     this.totalElements = 0;
     this.selectedPage = 1;
+    this.isSaved = false;
 
     makeAutoObservable(this);
   }
@@ -42,6 +45,10 @@ class MainStore {
 
   setSelectedPage(value: number) {
     this.selectedPage = value;
+  }
+
+  setIsSaved(value: boolean) {
+    this.isSaved = value;
   }
 }
 
